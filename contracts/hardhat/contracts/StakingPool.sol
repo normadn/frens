@@ -4,6 +4,8 @@ pragma solidity >=0.8.0 <0.9.0;
 //import "hardhat/console.sol";
 // import "@openzeppelin/contracts/access/Ownable.sol";
 // https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+
 interface IDepositContract {
 
     function deposit(
@@ -16,11 +18,13 @@ interface IDepositContract {
 }
 
 
-contract StakingPool {
+contract StakingPool is ERC721Enumerable {
 
   event Deposit(address depositContractAddress, address caller);
 
-  mapping (address => uint) public userBalances;
+  mapping (uint => uint) public depositAmount;
+
+  uint private _tokenId;
 
   enum State { acceptingDeposits, staked, exited }
   State currentState;
@@ -35,7 +39,7 @@ contract StakingPool {
    _;
   }
 
-  constructor(address depositContractAddress_, address owner_)  {
+  constructor(address depositContractAddress_, address owner_) ERC721("staking con amiogos", "FRENS") {
     currentState = State.acceptingDeposits;
     depositContractAddress = depositContractAddress_;
     depositContract = IDepositContract(depositContractAddress);
@@ -43,13 +47,22 @@ contract StakingPool {
   }
 
   function deposit(address userAddress) public payable {
-    userBalances[userAddress] += msg.value;
+    _tokenId++;
+    uint256 id = _tokenId;
+    depositAmount[id] = msg.value;
+    _mint(userAddress, id);
   }
 
-  function withdraw(uint _amount) public {
+  function addToDeposit(uint _id) public payable {
+    require(_exists(id), "not exist");
+    depositAmount[id] += msg.value;
+  }
+
+  function withdraw(uint _id, uint _amount) public {
     require(currentState != State.staked, "cannot withdraw once staked");
-    require(userBalances[address(msg.sender)] >= _amount, "not enough deposited");
-    userBalances[address(msg.sender)] -= _amount;
+    require(msg.sender == ownerOf(_id), "not the owner");
+    require(depositAmount[_id] >= _amount, "not enough deposited");
+    depositAmount[_id] -= _amount;
     payable(msg.sender).transfer(_amount);
   }
 
@@ -77,6 +90,12 @@ contract StakingPool {
 
 
   // to support receiving ETH by default
-  receive() external payable {}
+  receive() external payable {
+    _tokenId++;
+    uint256 id = _tokenId;
+    depositAmount[id] = msg.value;
+    _mint(msg.sender, id);
+  }
+
   fallback() external payable {}
 }
