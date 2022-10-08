@@ -5,7 +5,7 @@ import Navbar from 'components/navbar';
 
 const Home: NextPage = () => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-theme="winter">
       <Head>
         <title>frens</title>
         <meta
@@ -20,9 +20,12 @@ const Home: NextPage = () => {
       <main className={styles.main}>
 
         <h1 className="text-3xl font-bold underline">
-          Hello world!
+          Open your world to crypto staking rewards
         </h1>
-        <button className="btn">Button</button>
+        <h2 className="text-2xl">
+          buidl fancy landing page here
+        </h2>
+        <button className="btn btn-primary text-white">Button</button>
 
         <h1 className={styles.title}>
           Welcome to <a href="">RainbowKit</a> + <a href="">wagmi</a> +{' '}
