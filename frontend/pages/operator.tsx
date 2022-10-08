@@ -1,13 +1,26 @@
+import { useState, useEffect } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import Navbar from 'components/navbar';
-import { useState } from 'react';
 
 const CODE_LENGTH = 9
 
 const Operator: NextPage = () => {
   const [components, setComponents] = useState([])
+  const [ssvOperators, setssvOperators] = useState([]);
+  useEffect(() => {
+     fetch('https://api.ssv.network/api/v1/operators/graph?page=1&perPage=10')
+        .then((response) => response.json())
+        .then((data) => {
+           console.log(data);
+           setssvOperators(data);
+        })
+        .catch((err) => {
+           console.log(err.message);
+        });
+  }, []);
+
   return (
     <div className={styles.container} data-theme="winter">
       <Head>
@@ -27,7 +40,7 @@ const Operator: NextPage = () => {
           Invite frens
         </h1>
         <button className="btn" onClick={generateCodeForOperator}>Button</button>
-        {components.map((item, i) => (<CodeComponent code={item}/>))}
+        {components.map((item, i) => (<CodeComponent code={item} />))}
       </main>
 
       <footer className={styles.footer}>
@@ -45,11 +58,17 @@ const Operator: NextPage = () => {
 };
 
 const CodeComponent = (props) => {
+  const link = `https://frens-network.vercel.app/investor?token=${props.code}`
   return (
     <div>
-        <h1>{props.code}</h1> 
+      <h2 className='title'>{link}</h2>
+      <button className='btn' onClick={() => copyToClipboard(link)}>Copy to clipboard</button>
     </div>
   );
+
+  function copyToClipboard(copyMe: string): void {
+    navigator.clipboard.writeText(copyMe)
+  }
 };
 
 export default Operator;

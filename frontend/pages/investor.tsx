@@ -1,9 +1,16 @@
+import Navbar from 'components/navbar';
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
-import Navbar from 'components/navbar';
 
 const Investor: NextPage = () => {
+  const token = useRouter().query["token"]
+  let tokenText = undefined
+  if (token !== undefined) {
+    tokenText = <h1>You have joined the pool with code {token}</h1>
+  }
+
   return (
     <div className={styles.container} data-theme="winter">
       <Head>
@@ -18,7 +25,7 @@ const Investor: NextPage = () => {
       <Navbar/>
 
       <main className={styles.main}>
-
+        {tokenText}
         <h1 className="text-3xl font-bold underline">
           Invest here
         </h1>
