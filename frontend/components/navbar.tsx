@@ -20,8 +20,8 @@ const Navbar = () => (
             </Link>
           </li>
           <li>
-            <Link href="/investor">
-              <a>Investor</a>
+            <Link href="/staker">
+              <a>Staker</a>
             </Link>
           </li>
         </ul>
