@@ -7,9 +7,10 @@ pragma solidity >=0.8.0 <0.9.0;
 
 contract StakingPool {
 
-  event Deposit(bytes result, address depositContract, address caller)
+  event Deposit(bytes result, address depositContract, address caller);
 
   mapping (address => uint) public userBalances;
+
   enum State { acceptingDeposits, staked, exited }
   State currentState;
 
@@ -32,6 +33,7 @@ contract StakingPool {
   }
 
   function stake(bytes calldata depositData) public {
+    require(address(this).balance >= 32, "not enough eth");
     currentState = State.staked;
     uint value = 32 ether;
     (bool success, bytes memory result) = depositContract.call{value: value}(depositData);
