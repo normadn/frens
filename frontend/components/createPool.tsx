@@ -1,12 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useCreatePool } from '../hooks/write/useCreatePool';
+import { useSSVReadTest } from '../hooks/read/useSSVReadTest';
 
 const INVITATION_TOKEN_LENGTH = 9
 
-export const CreatePool = ({setTokenCode}) => {
+export const CreatePool = ({setTokenCode, setStep}) => {
     const [ssvOperators, setssvOperators] = useState([]);
     const [frenSsvOperatorIDs, setFrenSsvOperatorIDs] = useState([]);
-    const { write:createPool } = useCreatePool({name: "dummy"});
+
+    // const { data, isError, isLoading } = useSSVReadTest()
+    // console.log(data)
+
+    const { write:createPool } = useCreatePool();
 
     useEffect(() => {
         const fetchOperators = async () => {
@@ -18,7 +23,6 @@ export const CreatePool = ({setTokenCode}) => {
         const fetchFrenOperator = async () => {
             const data = await fetch('https://api.ssv.network/api/v1/operators/owned_by/0x9b18e9e9aa3dD35100b385b7035C0B1E44AfcA14?page=1&perPage=10');
             const json = await data.json();
-            // console.log(json.operators)
             setFrenSsvOperatorIDs(json.operators);
         }
 
@@ -30,8 +34,12 @@ export const CreatePool = ({setTokenCode}) => {
     }, []);
 
     function onCreatePool(): void {
-        const inviteToken = Math.random().toString(36).substring(2, INVITATION_TOKEN_LENGTH)
-        setTokenCode(inviteToken)
+        const inviteToken = Math.random().toString(36).substring(2, INVITATION_TOKEN_LENGTH);
+        setTokenCode(inviteToken);
+
+        setStep(2);
+
+        createPool();
     }
 
     let operatorList = ssvOperators?.map((item, i) => {
@@ -42,16 +50,13 @@ export const CreatePool = ({setTokenCode}) => {
         );
     });
 
-    console.log(frenSsvOperatorIDs)
+    // console.log(frenSsvOperatorIDs)
 
     return (
         <div>
             <div>Create a SSV operated Validator</div>
             <div>You can select 3 other operators to run you DVT secured validator</div>
-            <div>
-            {operatorList}
-                
-            </div>
+            <div>{operatorList}</div>
             <button className='btn btn-primary' onClick={() => onCreatePool()}>
                 create Pool
             </button>
