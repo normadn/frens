@@ -58,7 +58,7 @@ const Operator: NextPage = () => {
 };
 
 const CodeComponent = (props) => {
-  const link = `https://frens-network.vercel.app/investor/${props.code}`
+  const link = `https://frens-network.vercel.app/investor?token=${props.code}`
   return (
     <div>
       <h2 className='title'>{link}</h2>
