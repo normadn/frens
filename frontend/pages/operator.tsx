@@ -27,7 +27,7 @@ const Operator: NextPage = () => {
           Invite frens
         </h1>
         <button className="btn" onClick={generateCodeForOperator}>Button</button>
-        {components.map((item, i) => (<CodeComponent code={item}/>))}
+        {components.map((item, i) => (<CodeComponent code={item} />))}
       </main>
 
       <footer className={styles.footer}>
@@ -45,11 +45,17 @@ const Operator: NextPage = () => {
 };
 
 const CodeComponent = (props) => {
+  const link = `https://frens-network.vercel.app/investor/${props.code}`
   return (
     <div>
-        <h1>{props.code}</h1> 
+      <h2 className='title'>{link}</h2>
+      <button className='btn' onClick={() => copyToClipboard(link)}>Copy to clipboard</button>
     </div>
   );
+
+  function copyToClipboard(copyMe: string): void {
+    navigator.clipboard.writeText(copyMe)
+  }
 };
 
 export default Operator;
