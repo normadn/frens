@@ -29,6 +29,8 @@ const Investor: NextPage = () => {
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧑‍🤝‍🧑</text></svg>" />
       </Head>
       <Navbar />
+      
+      <OperatorWidget operatorAddress='0x9b18e9e9aa3dD35100b385b7035C0B1E44AfcA14' />
 
       <main className={styles.main}>
         <h1 className="text-3xl font-bold underline">
@@ -41,7 +43,6 @@ const Investor: NextPage = () => {
           Deposit
         </button>
 
-        <OperatorWidget operatorAddress='0x9b18e9e9aa3dD35100b385b7035C0B1E44AfcA14' />
 
       </main>
 
