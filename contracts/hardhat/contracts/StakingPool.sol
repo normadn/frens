@@ -7,12 +7,17 @@ pragma solidity >=0.8.0 <0.9.0;
 
 contract StakingPool {
 
+  event Deposit(bytes result, address depositContract, address caller)
+
   mapping (address => uint) public userBalances;
   enum State { acceptingDeposits, staked, exited }
   State currentState;
 
-  constructor()  {
+  address public depositContract;
+
+  constructor(address depositContract_)  {
     currentState = State.acceptingDeposits;
+    depositContract = depositContract_;
   }
 
   function deposit(address userAddress) public payable {
@@ -26,8 +31,12 @@ contract StakingPool {
     payable(msg.sender).transfer(_amount);
   }
 
-  function stake() public {
+  function stake(bytes calldata depositData) public {
     currentState = State.staked;
+    uint value = 32 ether;
+    (bool success, bytes memory result) = depositContract.call{value: value}(depositData);
+    require(success, "executeTransaction: tx failed");
+    emit Deposit(result, depositContract, msg.sender);
   }
 
 

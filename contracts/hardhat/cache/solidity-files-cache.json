@@ -130,8 +130,8 @@
       ]
     },
     "/home/wildhare/hardhat/speedRunEthereum/frens/packages/hardhat/contracts/StakingPool.sol": {
-      "lastModificationDate": 1665192271575,
-      "contentHash": "8b7b865ab6626c1b427d16be18a33d48",
+      "lastModificationDate": 1665199772076,
+      "contentHash": "10ea55ba38826dac93dd1c8934c2327b",
       "sourceName": "contracts/StakingPool.sol",
       "solcConfig": {
         "version": "0.8.4",
