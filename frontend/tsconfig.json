@@ -1,10 +1,13 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
@@ -13,8 +16,28 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "strict": false,
+    "baseUrl": ".", // This must be specified if "paths" is.
+    "paths": {
+      "@blockchainAccountId": ["libs/blockchainAccountId"],
+      "@blockchainAccountId/*": ["libs/blockchainAccountId/*"],
+      "@caipHelpers": ["libs/caipHelpers"],
+      "@caipHelpers/*": ["libs/caipHelpers/*"],
+      "@humanboundToken": ["libs/humanboundToken"],
+      "@humanboundToken/*": ["libs/humanboundToken/*"],
+      "@utils": ["libs/utils"],
+      "@utils/*": ["libs/utils/*"],
+      "@web3Helper": ["libs/web3Helper"],
+      "@web3Helper/*": ["libs/web3Helper/*"],
+    }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
