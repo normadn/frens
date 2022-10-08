@@ -28,7 +28,7 @@ contract StakingPoolFactory {
   function create(
     address depositContractAddress_,
     address owner_
-  ) public {
+  ) public returns(address, uint) {
     uint id = numberOfStakingPools();
 
     StakingPool stakingPool = (new StakingPool)(depositContractAddress_, owner_);
@@ -36,6 +36,7 @@ contract StakingPoolFactory {
     existsStakingPool[address(stakingPool)] = true;
 
     emit Create(id, address(stakingPool), msg.sender, owner_, depositContractAddress_);
+    return(address(stakingPool), id);
   }
 
   function numberOfStakingPools() public view returns(uint) {
@@ -47,9 +48,10 @@ contract StakingPoolFactory {
     view
     returns (
       address stakingPoolAddress,
-      uint balance
+      uint balance,
+      address owner
     ) {
       StakingPool stakingPool = stakingPools[_index];
-      return (address(stakingPool), address(stakingPool).balance);
+      return (address(stakingPool), address(stakingPool).balance, stakingPool.getOwner());
     }
 }
