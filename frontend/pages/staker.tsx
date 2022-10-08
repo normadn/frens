@@ -5,6 +5,7 @@ import styles from '../styles/Home.module.css';
 import Navbar from 'components/navbar';
 import { useDeposit } from '../hooks/write/useDeposit';
 import { StakeFormComponent } from 'components/staker/stakeFormComponent';
+import { OperatorWidget } from 'components/operatorWidget';
 
 const Investor: NextPage = () => {
   const token = useRouter().query["token"]
@@ -39,6 +40,8 @@ const Investor: NextPage = () => {
         <button className="btn btn-primary" disabled={!deposit} onClick={() => deposit?.()}>
           Deposit
         </button>
+
+        <OperatorWidget operatorAddress='0x9b18e9e9aa3dD35100b385b7035C0B1E44AfcA14' />
 
       </main>
 
