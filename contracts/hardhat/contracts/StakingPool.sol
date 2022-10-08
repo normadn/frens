@@ -4,6 +4,17 @@ pragma solidity >=0.8.0 <0.9.0;
 //import "hardhat/console.sol";
 // import "@openzeppelin/contracts/access/Ownable.sol";
 // https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol
+interface IDepositContract {
+
+    function deposit(
+        bytes calldata pubkey,
+        bytes calldata withdrawal_credentials,
+        bytes calldata signature,
+        bytes32 deposit_data_root
+    ) external payable;
+
+}
+
 
 contract StakingPool {
 
@@ -32,13 +43,18 @@ contract StakingPool {
     payable(msg.sender).transfer(_amount);
   }
 
-  function stake(bytes calldata depositData) public {
+  function stake(
+    bytes calldata pubkey,
+    bytes calldata withdrawal_credentials,
+    bytes calldata signature,
+    bytes32 deposit_data_root
+  ) public {
     require(address(this).balance >= 32, "not enough eth");
     currentState = State.staked;
     uint value = 32 ether;
-    (bool success, bytes memory result) = depositContract.call{value: value}(depositData);
-    require(success, "executeTransaction: tx failed");
-    emit Deposit(result, depositContract, msg.sender);
+    //(bool success, bytes memory result) = depositContract.call{value: value}(_depositData);
+    //require(success, "executeTransaction: tx failed");
+    //emit Deposit(result, depositContract, msg.sender);
   }
 
 
