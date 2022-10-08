@@ -11,7 +11,7 @@ export const CreatePool = ({setTokenCode, setStep}) => {
     // const { data, isError, isLoading } = useSSVReadTest()
     // console.log(data)
 
-    const { write:createPool } = useCreatePool();
+    const { data, write:createPool } = useCreatePool();
 
     useEffect(() => {
         const fetchOperators = async () => {
@@ -39,7 +39,7 @@ export const CreatePool = ({setTokenCode, setStep}) => {
 
         setStep(2);
 
-        createPool();
+        // createPool();
     }
 
     let operatorList = ssvOperators?.map((item, i) => {
