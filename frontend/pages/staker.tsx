@@ -5,6 +5,7 @@ import styles from '../styles/Home.module.css';
 import Navbar from 'components/navbar';
 import { useDeposit } from '../hooks/write/useDeposit';
 import { StakeFormComponent } from 'components/staker/stakeFormComponent';
+import { DepositProgressBarComponent } from 'components/shared/depositProgressBarComponent';
 import { OperatorWidget } from 'components/operatorWidget';
 
 const Investor: NextPage = () => {
@@ -29,10 +30,11 @@ const Investor: NextPage = () => {
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧑‍🤝‍🧑</text></svg>" />
       </Head>
       <Navbar />
-      
+
       <OperatorWidget operatorAddress='0x9b18e9e9aa3dD35100b385b7035C0B1E44AfcA14' />
 
       <main className={styles.main}>
+        <DepositProgressBarComponent />
         <h1 className="text-3xl font-bold underline">
           Stake now
         </h1>
