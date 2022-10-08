@@ -1,0 +1,35 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/StakingPool.sol": {
+      "content": "pragma solidity >=0.8.0 <0.9.0;\n//SPDX-License-Identifier: MIT\n\n//import \"hardhat/console.sol\";\n// import \"@openzeppelin/contracts/access/Ownable.sol\";\n// https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol\n\ncontract StakingPool {\n\n  mapping (address => uint) public userBalances;\n  enum State { acceptingDeposits, staked, exited }\n  State currentState;\n\n  constructor()  {\n    currentState = State.acceptingDeposits;\n  }\n\n  function deposit(address userAddress) public payable {\n    userBalances[userAddress] += msg.value;\n  }\n\n  function withdraw(uint _amount) public {\n    require(currentState != State.staked, \"cannot withdraw once staked\");\n    require(userBalances[address(msg.sender)] >= _amount, \"not enough deposited\");\n    userBalances[address(msg.sender)] -= _amount;\n    payable(msg.sender).transfer(_amount);\n  }\n\n  function stake() public {\n    currentState = State.staked;\n  }\n\n\n  function unstake() public {\n    currentState = State.exited;\n  }\n\n\n  // to support receiving ETH by default\n  receive() external payable {}\n  fallback() external payable {}\n}\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

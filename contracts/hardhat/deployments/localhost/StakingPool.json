@@ -1,0 +1,152 @@
+{
+  "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "fallback"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "userAddress",
+          "type": "address"
+        }
+      ],
+      "name": "deposit",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "stake",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "unstake",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "userBalances",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdraw",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "receive"
+    }
+  ],
+  "transactionHash": "0xb1ce14bc1ace89ff9ea2979023edad10437bff174f42f2532eca8224e75c514b",
+  "receipt": {
+    "to": null,
+    "from": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+    "contractAddress": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    "transactionIndex": 0,
+    "gasUsed": "230818",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x7bd6e45bc3cf6776418068702754064b709a8bef836a937d3d2762f5eaa99aac",
+    "transactionHash": "0xb1ce14bc1ace89ff9ea2979023edad10437bff174f42f2532eca8224e75c514b",
+    "logs": [],
+    "blockNumber": 1,
+    "cumulativeGasUsed": "230818",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "solcInputHash": "74990f79c35d44b2e3d3127b5d19f63d",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.4+commit.c7e474f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"userAddress\",\"type\":\"address\"}],\"name\":\"deposit\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"stake\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"unstake\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"userBalances\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/StakingPool.sol\":\"StakingPool\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/StakingPool.sol\":{\"content\":\"pragma solidity >=0.8.0 <0.9.0;\\n//SPDX-License-Identifier: MIT\\n\\n//import \\\"hardhat/console.sol\\\";\\n// import \\\"@openzeppelin/contracts/access/Ownable.sol\\\";\\n// https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol\\n\\ncontract StakingPool {\\n\\n  mapping (address => uint) public userBalances;\\n  enum State { acceptingDeposits, staked, exited }\\n  State currentState;\\n\\n  constructor()  {\\n    currentState = State.acceptingDeposits;\\n  }\\n\\n  function deposit(address userAddress) public payable {\\n    userBalances[userAddress] += msg.value;\\n  }\\n\\n  function withdraw(uint _amount) public {\\n    require(currentState != State.staked, \\\"cannot withdraw once staked\\\");\\n    require(userBalances[address(msg.sender)] >= _amount, \\\"not enough deposited\\\");\\n    userBalances[address(msg.sender)] -= _amount;\\n    payable(msg.sender).transfer(_amount);\\n  }\\n\\n  function stake() public {\\n    currentState = State.staked;\\n  }\\n\\n\\n  function unstake() public {\\n    currentState = State.exited;\\n  }\\n\\n\\n  // to support receiving ETH by default\\n  receive() external payable {}\\n  fallback() external payable {}\\n}\\n\",\"keccak256\":\"0xabedc3d5b7a90e47a56888ce35d08bcd7599bbefb28255ff0b5aa2d6f5810d68\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b506001805460ff1916905561032c8061002a6000396000f3fe60806040526004361061004b5760003560e01c806326224c64146100545780632def6620146100935780632e1a7d4d146100a85780633a4b66f1146100c8578063f340fa01146100dd57005b3661005257005b005b34801561006057600080fd5b5061008161006f36600461026b565b60006020819052908152604090205481565b60405190815260200160405180910390f35b34801561009f57600080fd5b506100526100f0565b3480156100b457600080fd5b506100526100c3366004610299565b610106565b3480156100d457600080fd5b5061005261022a565b6100526100eb36600461026b565b61023b565b600180546002919060ff191681835b0217905550565b6001805460ff16600281111561012c57634e487b7160e01b600052602160045260246000fd5b141561017f5760405162461bcd60e51b815260206004820152601b60248201527f63616e6e6f74207769746864726177206f6e6365207374616b6564000000000060448201526064015b60405180910390fd5b336000908152602081905260409020548111156101d55760405162461bcd60e51b81526020600482015260146024820152731b9bdd08195b9bdd59da0819195c1bdcda5d195960621b6044820152606401610176565b33600090815260208190526040812080548392906101f49084906102c9565b9091555050604051339082156108fc029083906000818181858888f19350505050158015610226573d6000803e3d6000fd5b5050565b60018054819060ff191681806100ff565b6001600160a01b038116600090815260208190526040812080543492906102639084906102b1565b909155505050565b60006020828403121561027c578081fd5b81356001600160a01b0381168114610292578182fd5b9392505050565b6000602082840312156102aa578081fd5b5035919050565b600082198211156102c4576102c46102e0565b500190565b6000828210156102db576102db6102e0565b500390565b634e487b7160e01b600052601160045260246000fdfea26469706673582212208b45b5d90b260578e0f94d0e3de1ec240721c5dffb898002aa4b8afc9fc12b0264736f6c63430008040033",
+  "deployedBytecode": "0x60806040526004361061004b5760003560e01c806326224c64146100545780632def6620146100935780632e1a7d4d146100a85780633a4b66f1146100c8578063f340fa01146100dd57005b3661005257005b005b34801561006057600080fd5b5061008161006f36600461026b565b60006020819052908152604090205481565b60405190815260200160405180910390f35b34801561009f57600080fd5b506100526100f0565b3480156100b457600080fd5b506100526100c3366004610299565b610106565b3480156100d457600080fd5b5061005261022a565b6100526100eb36600461026b565b61023b565b600180546002919060ff191681835b0217905550565b6001805460ff16600281111561012c57634e487b7160e01b600052602160045260246000fd5b141561017f5760405162461bcd60e51b815260206004820152601b60248201527f63616e6e6f74207769746864726177206f6e6365207374616b6564000000000060448201526064015b60405180910390fd5b336000908152602081905260409020548111156101d55760405162461bcd60e51b81526020600482015260146024820152731b9bdd08195b9bdd59da0819195c1bdcda5d195960621b6044820152606401610176565b33600090815260208190526040812080548392906101f49084906102c9565b9091555050604051339082156108fc029083906000818181858888f19350505050158015610226573d6000803e3d6000fd5b5050565b60018054819060ff191681806100ff565b6001600160a01b038116600090815260208190526040812080543492906102639084906102b1565b909155505050565b60006020828403121561027c578081fd5b81356001600160a01b0381168114610292578182fd5b9392505050565b6000602082840312156102aa578081fd5b5035919050565b600082198211156102c4576102c46102e0565b500190565b6000828210156102db576102db6102e0565b500390565b634e487b7160e01b600052601160045260246000fdfea26469706673582212208b45b5d90b260578e0f94d0e3de1ec240721c5dffb898002aa4b8afc9fc12b0264736f6c63430008040033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [
+      {
+        "astId": 5,
+        "contract": "contracts/StakingPool.sol:StakingPool",
+        "label": "userBalances",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_mapping(t_address,t_uint256)"
+      },
+      {
+        "astId": 12,
+        "contract": "contracts/StakingPool.sol:StakingPool",
+        "label": "currentState",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_enum(State)9"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_enum(State)9": {
+        "encoding": "inplace",
+        "label": "enum StakingPool.State",
+        "numberOfBytes": "1"
+      },
+      "t_mapping(t_address,t_uint256)": {
+        "encoding": "mapping",
+        "key": "t_address",
+        "label": "mapping(address => uint256)",
+        "numberOfBytes": "32",
+        "value": "t_uint256"
+      },
+      "t_uint256": {
+        "encoding": "inplace",
+        "label": "uint256",
+        "numberOfBytes": "32"
+      }
+    }
+  }
+}

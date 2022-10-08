@@ -1,0 +1,6 @@
+**node_modules
+# dependencies
+/node_modules
+contracts/hardhat/deployments
+contracts/hardhat/cache*
+contracts/hardhat/node_modules
