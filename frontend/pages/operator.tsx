@@ -4,12 +4,16 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import Navbar from 'components/navbar';
 import { DropzoneComponent } from 'react-dropzone-component';
+import { useCreatePool } from '../hooks/write/useCreatePool';
 
 const INVITATION_TOKEN_LENGTH = 9
 
 const Operator: NextPage = () => {
   const [components, setComponents] = useState([])
   const [ssvOperators, setssvOperators] = useState([]);
+
+  const { write:createPool } = useCreatePool({name: "dummy"});
+
   useEffect(() => {
     fetch('https://api.ssv.network/api/v1/operators/graph?page=1&perPage=10')
       .then((response) => response.json())
@@ -53,6 +57,13 @@ const Operator: NextPage = () => {
       <Navbar />
 
       <main className={styles.main}>
+        <h1 className="text-3xl font-bold underline">
+          Pool Creation
+        </h1>
+
+        <button className='btn btn-primary' disabled={!createPool} onClick={() => createPool?.()}>
+          Create Pool
+        </button>
 
         <h1 className="text-3xl font-bold underline">
           Invite frens

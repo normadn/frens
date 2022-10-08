@@ -30,9 +30,11 @@ const Investor: NextPage = () => {
       <main className={styles.main}>
         {tokenText}
         <h1 className="text-3xl font-bold underline">
-          Invest here
+          Stake now
         </h1>
-        <button className="btn">Button</button>
+        <button className="btn btn-primary" disabled={!deposit} onClick={() => deposit?.()}>
+          Deposit
+        </button>
 
       </main>
 
