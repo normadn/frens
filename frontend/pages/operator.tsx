@@ -1,38 +1,44 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import Navbar from 'components/navbar';
+import Dropzone, { useDropzone } from 'react-dropzone';
+import { DropzoneComponent } from 'react-dropzone-component';
 
-const CODE_LENGTH = 9
+const INVITATION_TOKEN_LENGTH = 9
 
 const Operator: NextPage = () => {
   const [components, setComponents] = useState([])
   const [ssvOperators, setssvOperators] = useState([]);
   useEffect(() => {
-     fetch('https://api.ssv.network/api/v1/operators/graph?page=1&perPage=10')
-        .then((response) => response.json())
-        .then((data) => {
-           console.log(data);
-           setssvOperators(data);
-        })
-        .catch((err) => {
-           console.log(err.message);
-        });
+    fetch('https://api.ssv.network/api/v1/operators/graph?page=1&perPage=10')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setssvOperators(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   }, []);
 
   const [ssvOperatorIDs, setssvOperatorIDs] = useState([]);
   useEffect(() => {
-     fetch('https://api.ssv.network/api/v1/operators/owned_by/0x9b18e9e9aa3dD35100b385b7035C0B1E44AfcA14?page=1&perPage=10')
-        .then((response) => response.json())
-        .then((data) => {
-           console.log(data);
-           setssvOperators(data);
-        })
-        .catch((err) => {
-           console.log(err.message);
-        });
+    fetch('https://api.ssv.network/api/v1/operators/owned_by/0x9b18e9e9aa3dD35100b385b7035C0B1E44AfcA14?page=1&perPage=10')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setssvOperators(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   }, []);
+
+  const componentConfig = { postUrl: 'no-url' };
+  const djsConfig = { autoProcessQueue: false }
+  const eventHandlers = { addedfile: (file) => console.log(file) }
 
   return (
     <div className={styles.container} data-theme="winter">
@@ -54,6 +60,7 @@ const Operator: NextPage = () => {
         </h1>
         <button className="btn" onClick={generateCodeForOperator}>Button</button>
         {components.map((item, i) => (<CodeComponent code={item} />))}
+        <DropzoneComponent config={componentConfig} eventHandlers={eventHandlers} djsConfig={djsConfig}></DropzoneComponent>
       </main>
 
       <footer className={styles.footer}>
@@ -61,13 +68,42 @@ const Operator: NextPage = () => {
           Made with ❤️ by your frens at 🌈
         </a>
       </footer>
-    </div>
+    </div >
   );
 
+
   function generateCodeForOperator(): void {
-    const code = Math.random().toString(36).substring(2, CODE_LENGTH)
+    const code = Math.random().toString(36).substring(2, INVITATION_TOKEN_LENGTH)
     setComponents([code])
   }
+};
+
+const DropzoneComponent1 = () => {
+  const onDrop = (files: []): void => {
+    console.log(files)
+    const div = document.getElementById("dropzone-div")
+    div.classList.add("dropped-file")
+  }
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+  });
+
+
+  return (
+    <div className="dropzone-div" {...getRootProps()}>
+      <input className="dropzone-input" {...getInputProps()} />
+      <div id="dropzone-div" className="text-center">
+        {isDragActive ? (
+          <p className="dropzone-content">Release to drop the files here</p>
+        ) : (
+          <p className="dropzone-content">
+            Drag 'n' drop some files here, or click to select files
+          </p>
+        )}
+      </div>
+    </div>
+  );
 };
 
 const CodeComponent = (props) => {
