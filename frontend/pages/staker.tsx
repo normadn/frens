@@ -5,6 +5,7 @@ import styles from '../styles/Home.module.css';
 import Navbar from 'components/navbar';
 import { useDeposit } from '../hooks/write/useDeposit';
 import { StakeFormComponent } from 'components/staker/stakeFormComponent';
+import { DepositProgressBarComponent } from 'components/shared/depositProgressBarComponent';
 
 const Investor: NextPage = () => {
   const token = useRouter().query["token"]
@@ -30,6 +31,7 @@ const Investor: NextPage = () => {
       <Navbar />
 
       <main className={styles.main}>
+        <DepositProgressBarComponent />
         <h1 className="text-3xl font-bold underline">
           Stake now
         </h1>

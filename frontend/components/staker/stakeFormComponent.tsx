@@ -1,7 +1,8 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from 'react';
 import { BalanceComponent } from "./balanceComponent";
 import { useAccount, useBalance } from "wagmi"
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { DepositProgressBarComponent } from 'components/shared/depositProgressBarComponent';
 
 const errorClassForInput = "input-error"
 
@@ -40,7 +41,8 @@ function handleUserInput(event: ChangeEvent<HTMLInputElement>, formattedBalance:
         const balance = parseFloat(formattedBalance)
         const value = parseFloat(stringValue)
         const ethInput = document.getElementById("ethInput")
-        if (value > balance) {
+        const validState = value > balance
+        if (validState) {
             ethInput.classList.add(errorClassForInput)
         } else {
             ethInput.classList.remove(errorClassForInput)

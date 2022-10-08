@@ -5,6 +5,7 @@ import Navbar from 'components/navbar';
 import { InviteFrens } from 'components/inviteFrens';
 import { CreatePool } from 'components/createPool';
 import { DropKeys } from 'components/dropKeys';
+import { DepositProgressBarComponent } from 'components/shared/depositProgressBarComponent';
 
 const Operator: NextPage = () => {
   const [tokenCode, setTokenCode] = useState("abcdef")
@@ -23,20 +24,21 @@ const Operator: NextPage = () => {
       <Navbar />
 
       <main className="flex flex-col justify-center items-center min-h-screen -mt-20">
+        <DepositProgressBarComponent></DepositProgressBarComponent>
         <div className="w-2/3 flex flex-col items-center border-2 border-sky-500 rounded-md mb-4">
           <h1 className="text-3xl font-bold underline">
             Create Pool
           </h1>
-          <CreatePool setTokenCode={setTokenCode}/>
+          <CreatePool setTokenCode={setTokenCode} />
         </div>
 
         <div className="w-2/3 flex flex-col items-center border-2 border-sky-500 rounded-md mb-4">
           <h1 className="text-3xl font-bold underline">
             Invite frens
           </h1>
-          <InviteFrens tokenCode={tokenCode}/>
+          <InviteFrens tokenCode={tokenCode} />
         </div>
-        
+
         <div className="w-2/3 flex flex-col items-center border-2 border-sky-500 rounded-md mb-4">
           <h1 className="text-3xl font-bold underline">
             Drop your keys
