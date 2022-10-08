@@ -1,13 +1,16 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useRouter } from 'next/router' ;
+import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
 import Navbar from 'components/navbar';
 import { useDeposit } from '../hooks/write/useDeposit';
 
 const Investor: NextPage = () => {
-  const pathname = useRouter().asPath;
-  console.log(pathname)
+  const token = useRouter().query["token"]
+  let tokenText = undefined
+  if (token !== undefined) {
+    tokenText = <h1>You have joined the pool with code {token}</h1>
+  }
 
   const { write:deposit } = useDeposit({val: "2"});
 
@@ -25,7 +28,7 @@ const Investor: NextPage = () => {
       <Navbar/>
 
       <main className={styles.main}>
-
+        {tokenText}
         <h1 className="text-3xl font-bold underline">
           Invest here
         </h1>
