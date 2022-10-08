@@ -21,6 +21,19 @@ const Operator: NextPage = () => {
         });
   }, []);
 
+  const [ssvOperatorIDs, setssvOperatorIDs] = useState([]);
+  useEffect(() => {
+     fetch('https://api.ssv.network/api/v1/operators/owned_by/0x9b18e9e9aa3dD35100b385b7035C0B1E44AfcA14?page=1&perPage=10')
+        .then((response) => response.json())
+        .then((data) => {
+           console.log(data);
+           setssvOperators(data);
+        })
+        .catch((err) => {
+           console.log(err.message);
+        });
+  }, []);
+
   return (
     <div className={styles.container} data-theme="winter">
       <Head>

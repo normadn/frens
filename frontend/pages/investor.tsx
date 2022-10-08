@@ -3,10 +3,13 @@ import Head from 'next/head';
 import { useRouter } from 'next/router' ;
 import styles from '../styles/Home.module.css';
 import Navbar from 'components/navbar';
+import { useDeposit } from '../hooks/write/useDeposit';
 
 const Investor: NextPage = () => {
   const pathname = useRouter().asPath;
   console.log(pathname)
+
+  const { write:deposit } = useDeposit({val: "2"});
 
   return (
     <div className={styles.container} data-theme="winter">
