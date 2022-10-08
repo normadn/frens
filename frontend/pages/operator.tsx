@@ -3,7 +3,6 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import Navbar from 'components/navbar';
-import Dropzone, { useDropzone } from 'react-dropzone';
 import { DropzoneComponent } from 'react-dropzone-component';
 
 const INVITATION_TOKEN_LENGTH = 9
@@ -76,34 +75,6 @@ const Operator: NextPage = () => {
     const code = Math.random().toString(36).substring(2, INVITATION_TOKEN_LENGTH)
     setComponents([code])
   }
-};
-
-const DropzoneComponent1 = () => {
-  const onDrop = (files: []): void => {
-    console.log(files)
-    const div = document.getElementById("dropzone-div")
-    div.classList.add("dropped-file")
-  }
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-  });
-
-
-  return (
-    <div className="dropzone-div" {...getRootProps()}>
-      <input className="dropzone-input" {...getInputProps()} />
-      <div id="dropzone-div" className="text-center">
-        {isDragActive ? (
-          <p className="dropzone-content">Release to drop the files here</p>
-        ) : (
-          <p className="dropzone-content">
-            Drag 'n' drop some files here, or click to select files
-          </p>
-        )}
-      </div>
-    </div>
-  );
 };
 
 const CodeComponent = (props) => {
