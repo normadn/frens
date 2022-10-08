@@ -1,13 +1,26 @@
+import { useState, useEffect } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import Navbar from 'components/navbar';
-import { useState } from 'react';
 
 const CODE_LENGTH = 9
 
 const Operator: NextPage = () => {
   const [components, setComponents] = useState([])
+  const [ssvOperators, setssvOperators] = useState([]);
+  useEffect(() => {
+     fetch('https://api.ssv.network/api/v1/operators/graph?page=1&perPage=10')
+        .then((response) => response.json())
+        .then((data) => {
+           console.log(data);
+           setssvOperators(data);
+        })
+        .catch((err) => {
+           console.log(err.message);
+        });
+  }, []);
+
   return (
     <div className={styles.container} data-theme="winter">
       <Head>

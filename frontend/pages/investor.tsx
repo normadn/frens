@@ -1,9 +1,13 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router' ;
 import styles from '../styles/Home.module.css';
 import Navbar from 'components/navbar';
 
 const Investor: NextPage = () => {
+  const pathname = useRouter().asPath;
+  console.log(pathname)
+
   return (
     <div className={styles.container} data-theme="winter">
       <Head>
