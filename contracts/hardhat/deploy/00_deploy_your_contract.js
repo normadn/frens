@@ -17,7 +17,7 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   const { deployer } = await getNamedAccounts();
   const chainId = await getChainId();
 
-  await deploy("StakingPool", {
+  await deploy("StakingPoolFactory", {
     // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
     from: deployer,
     args: [ "0x00000000219ab540356cBB839Cbe05303d7705Fa" ],
@@ -26,7 +26,7 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   });
 
   // Getting a previously deployed contract
-  const StakingPool = await ethers.getContract("StakingPool", deployer);
+  const StakingPoolFactory = await ethers.getContract("StakingPoolFactory", deployer);
   /*  await StakingPool.setPurpose("Hello");
 
     To take ownership of stakingPool using the ownable library uncomment next line and add the
@@ -76,4 +76,4 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   //   console.error(error);
   // }
 };
-module.exports.tags = ["StakingPool"];
+module.exports.tags = ["StakingPoolFactory"];
