@@ -1,6 +1,7 @@
 import { ChangeEvent } from "react";
 import { BalanceComponent } from "./balanceComponent";
 import { useAccount, useBalance } from "wagmi"
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const errorClassForInput = "input-error"
 
@@ -24,6 +25,12 @@ export const StakeFormComponent = () => {
                 </div >
             </div>
         );
+    } else {
+        return (
+            <div className="mt-4">
+                <ConnectButton></ConnectButton>
+            </div>
+        )
     }
 }
 
