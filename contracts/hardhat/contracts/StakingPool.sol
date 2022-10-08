@@ -28,10 +28,18 @@ contract StakingPool {
   address public depositContractAddress;
   IDepositContract depositContract;
 
-  constructor(address depositContractAddress_)  {
+  address owner;
+
+  modifier onlyOwner() {
+   require(address(msg.sender) == owner, "Not owner");
+   _;
+  }
+
+  constructor(address depositContractAddress_, address owner_)  {
     currentState = State.acceptingDeposits;
     depositContractAddress = depositContractAddress_;
     depositContract = IDepositContract(depositContractAddress);
+    owner = owner_;
   }
 
   function deposit(address userAddress) public payable {
@@ -50,7 +58,7 @@ contract StakingPool {
     bytes calldata withdrawal_credentials,
     bytes calldata signature,
     bytes32 deposit_data_root
-  ) public {
+  ) public onlyOwner{
     require(address(this).balance >= 32, "not enough eth");
     currentState = State.staked;
     uint value = 32 ether;

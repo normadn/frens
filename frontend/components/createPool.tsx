@@ -5,28 +5,28 @@ const INVITATION_TOKEN_LENGTH = 9
 
 export const CreatePool = ({setTokenCode}) => {
     const [ssvOperators, setssvOperators] = useState([]);
-    const [mySsvOperatorIDs, setMySsvOperatorIDs] = useState([]);
+    const [frenSsvOperatorIDs, setFrenSsvOperatorIDs] = useState([]);
     const { write:createPool } = useCreatePool({name: "dummy"});
 
     useEffect(() => {
-        fetch('https://api.ssv.network/api/v1/operators/graph?page=1&perPage=10')
-            .then((response) => response.json())
-            .then((data) => {
-            console.log(data);
-            setssvOperators(data);
-            })
-            .catch((err) => {
-            console.log(err.message);
-        });
-        fetch('https://api.ssv.network/api/v1/operators/owned_by/0x9b18e9e9aa3dD35100b385b7035C0B1E44AfcA14?page=1&perPage=10')
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-                setMySsvOperatorIDs(data);
-            })
-            .catch((err) => {
-                console.log(err.message);
-        });
+        const fetchOperators = async () => {
+            const data = await fetch('https://api.ssv.network/api/v1/operators/graph?page=1&perPage=10');
+            const json = await data.json();
+            setssvOperators(json.operators);
+        }
+
+        const fetchFrenOperator = async () => {
+            const data = await fetch('https://api.ssv.network/api/v1/operators/owned_by/0x9b18e9e9aa3dD35100b385b7035C0B1E44AfcA14?page=1&perPage=10');
+            const json = await data.json();
+            // console.log(json.operators)
+            setFrenSsvOperatorIDs(json.operators);
+        }
+
+        fetchOperators()
+            .catch(console.error);
+
+        fetchFrenOperator()
+            .catch(console.error);
     }, []);
 
     function onCreatePool(): void {
@@ -34,8 +34,24 @@ export const CreatePool = ({setTokenCode}) => {
         setTokenCode(inviteToken)
     }
 
+    let operatorList = ssvOperators?.map((item, i) => {
+        return (
+            <option key={i} value={item}>
+                {item.name}
+            </option>
+        );
+    });
+
+    console.log(frenSsvOperatorIDs)
+
     return (
         <div>
+            <div>Create a SSV operated Validator</div>
+            <div>You can select 3 other operators to run you DVT secured validator</div>
+            <div>
+            {operatorList}
+                
+            </div>
             <button className='btn btn-primary' onClick={() => onCreatePool()}>
                 create Pool
             </button>
