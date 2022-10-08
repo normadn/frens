@@ -8,6 +8,7 @@ import { DropKeys } from 'components/dropKeys';
 
 const Operator: NextPage = () => {
   const [tokenCode, setTokenCode] = useState("abcdef")
+  const [step, setStep] = useState(1)
 
   return (
     <div className="" data-theme="winter">
@@ -27,21 +28,27 @@ const Operator: NextPage = () => {
           <h1 className="text-3xl font-bold underline">
             Create Pool
           </h1>
-          <CreatePool setTokenCode={setTokenCode}/>
+          <div className={`${step == 1 ? "block" : "hidden"}`}>
+            <CreatePool setTokenCode={setTokenCode} setStep={setStep} />
+          </div>
         </div>
 
         <div className="w-2/3 flex flex-col items-center border-2 border-sky-500 rounded-md mb-4">
           <h1 className="text-3xl font-bold underline">
             Invite frens
           </h1>
-          <InviteFrens tokenCode={tokenCode}/>
+          <div className={`${step == 2 ? "block" : "hidden"}`}>
+            <InviteFrens tokenCode={tokenCode}/>
+          </div>
         </div>
         
         <div className="w-2/3 flex flex-col items-center border-2 border-sky-500 rounded-md mb-4">
           <h1 className="text-3xl font-bold underline">
             Drop your keys
           </h1>
-          <DropKeys />
+          <div className={`${step == 2 ? "block" : "hidden"}`}>
+            <DropKeys />
+          </div>
         </div>
       </main>
     </div >
