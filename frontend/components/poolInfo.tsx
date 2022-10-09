@@ -25,7 +25,7 @@ export const PoolInfo = ({address}) => {
             </div>
             <div className='flex justify-between'>
                 <div>Current Pool Balance</div>
-                <div>{totaldeposits?.toString()}</div> 
+                <div>{totaldeposits?.toString() ?? "0"}</div> 
             </div>
             <div className='flex justify-between'>
                 <div>Pool Address</div>
