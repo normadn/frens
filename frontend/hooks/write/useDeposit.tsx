@@ -8,15 +8,7 @@ import {
 import StakingPool from "../../utils/StakingPool.json";
 
 export function useDeposit({ address, val }: { address: string, val: string }) {
-  // const { chain } = useNetwork();
-  // const contractAddr =
-  //   chain?.name === "Goerli"
-  //     ? "0xf47ec3825eC5161d952278648fb2F3B747B8d347"
-  //     : "0x00000000000000000000000000000000deadb33f";
-
   const { address: connectedWallet, connector, isConnected } = useAccount()
-
-
 
   const { config } = usePrepareContractWrite({
     addressOrName: address,
@@ -28,10 +20,5 @@ export function useDeposit({ address, val }: { address: string, val: string }) {
     },
   })
   const { data, isLoading, isSuccess, write } = useContractWrite(config)
-  console.log("loading", isLoading);
-  console.log("data", data);
-  console.log("wallet",connectedWallet);
-  console.log("val",val);
-  console.log("address",address);
   return { data, isLoading, isSuccess, write };
 }

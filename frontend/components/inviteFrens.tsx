@@ -7,7 +7,7 @@ export const InviteFrens = ({ tokenCode, poolContract, setStep }) => {
 
   return (
     <div className="flex flex-col justify-center">
-      <div className='my-2'>{link}</div>
+      <div className='my-2 text-center'>{link}</div>
       <div className="flex justify-center">
         <button 
           className='btn bg-gradient-to-r from-pink-500 to-violet-500 text-white'
