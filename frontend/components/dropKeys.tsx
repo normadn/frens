@@ -1,11 +1,8 @@
-import { DropzoneComponent } from 'react-dropzone-component';
-// import { useSSVRegisterValidator } from '../hooks/write/useSSVRegisterValidator';
+import { useCallback } from 'react';
+import { useDropzone } from 'react-dropzone';
 import { useAllowance } from '../hooks/write/useAllowance';
-import { useSSVReadTest } from '../hooks/read/useSSVReadTest';
 
 export const DropKeys = ({ onFileReceived }: { onFileReceived: any }) => {
-    const componentConfig = { postUrl: 'no-url' };
-    const djsConfig = { autoProcessQueue: false }
     // const { data, isLoading, isSuccess, write: register } = useSSVRegisterValidator({
     //     keystore: "", keystorePassword: "testtest",
     //     operators: [], operatorIds: [], ssvAmount: 20
@@ -20,28 +17,47 @@ export const DropKeys = ({ onFileReceived }: { onFileReceived: any }) => {
     const eventHandlers = {
         addedfile: (file) => {
 
-            var reader = new FileReader();
-
-            reader.onload = function(evt) {
-                if(evt.target.readyState != 2) return;
-                if(evt.target.error) {
-                    alert('Error while reading file');
-                    return;
-                }
-        
-                const filecontent = evt.target.result;
-               
-                onFileReceived(filecontent);
-            };
-
-            reader.readAsText(file);
 
         }
     }
 
+    function MyDropzone() {
+        const onDrop = useCallback(acceptedFiles => {
+            acceptedFiles.forEach(file => {
+                var reader = new FileReader();
+
+                reader.onload = function (evt) {
+                    if (evt.target.readyState != 2) return;
+                    if (evt.target.error) {
+                        alert('Error while reading file');
+                        return;
+                    }
+
+                    const filecontent = evt.target.result;
+
+                    onFileReceived(filecontent);
+                };
+
+                reader.readAsText(file);
+            });
+        }, [])
+        const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+
+        return (
+            <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                {
+                    isDragActive ?
+                        <p>Drop the files here ...</p> :
+                        <p>Drag 'n' drop some files here, or click to select files</p>
+                }
+            </div>
+        )
+    }
+
     return (
         <>
-            <DropzoneComponent config={componentConfig} eventHandlers={eventHandlers} djsConfig={djsConfig}></DropzoneComponent>
+            <MyDropzone></MyDropzone>
             <button className="btn btn-primary" disabled={!allow} onClick={() => allow?.()}>
                 Allow spending SSV
             </button>

@@ -55,7 +55,7 @@ const Operator: NextPage = () => {
             3️⃣  Watch pool fill
           </h1>
           <div className={`${step == 3 ? "block w-2/3" : "hidden"}`}>
-            <PoolInfo address={poolContract}/>
+            <PoolInfo address={poolContract} />
           </div>
         </div>
 
