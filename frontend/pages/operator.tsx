@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Navbar from 'components/navbar';
 import { InviteFrens } from 'components/inviteFrens';
 import { CreatePool } from 'components/createPool';
+import { SelectOperator } from 'components/selectOperator';
 import { DropKeys } from 'components/dropKeys';
 import { DepositProgressBarComponent } from 'components/shared/depositProgressBarComponent';
 
@@ -24,31 +25,33 @@ const Operator: NextPage = () => {
 
       <Navbar />
 
-      <main className="flex flex-col justify-center items-center min-h-screen -mt-20">
-        <DepositProgressBarComponent></DepositProgressBarComponent>
-        <div className="w-2/3 flex flex-col items-center border-2 border-sky-500 rounded-md mb-4">
-          <h1 className="text-3xl font-bold underline">
-            Create Pool
+      <main className="flex flex-col justify-center items-center min-h-screen -mt-20 bg-slate-200">
+        <div className="w-2/3 flex flex-col items-center border-2 border-blue-500 rounded-md mb-4 p-3 bg-white">
+          <h1 className="text-3xl font-bold">
+            1️⃣ Create Pool
           </h1>
           <div className={`${step == 1 ? "block" : "hidden"}`}>
             <CreatePool setTokenCode={setTokenCode} setStep={setStep} />
           </div>
         </div>
 
-        <div className="w-2/3 flex flex-col items-center border-2 border-sky-500 rounded-md mb-4">
-          <h1 className="text-3xl font-bold underline">
-            Invite frens
+        <div className="w-2/3 flex flex-col items-center border-2 border-blue-500 rounded-md mb-4 p-3 bg-white">
+          <h1 className="text-3xl font-bold">
+            2️⃣ Invite frens
           </h1>
           <div className={`${step == 2 ? "block" : "hidden"}`}>
             <InviteFrens tokenCode={tokenCode} />
+            <DepositProgressBarComponent/>
           </div>
         </div>
 
-        <div className="w-2/3 flex flex-col items-center border-2 border-sky-500 rounded-md mb-4">
-          <h1 className="text-3xl font-bold underline">
-            Drop your keys
+        <div className="w-2/3 flex flex-col items-center border-2 border-blue-500 rounded-md mb-4 p-3 bg-white">
+          <h1 className="text-3xl font-bold">
+            3️⃣ Start your SSV validator
           </h1>
           <div className={`${step == 2 ? "block" : "hidden"}`}>
+            <SelectOperator setTokenCode={setTokenCode} setStep={setStep} />
+
             <DropKeys />
           </div>
         </div>
