@@ -42,7 +42,7 @@ const Investor: NextPage = () => {
           Stake now
         </h1>
         {/* {tokenText} */}
-        {/* {stakeForm} */}
+        {stakeForm}
         <br />
         <button className="btn btn-primary" disabled={!deposit} onClick={() => deposit?.()}>
           Deposit
