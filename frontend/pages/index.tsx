@@ -23,8 +23,8 @@ const Home: NextPage = () => {
           <div className="hero-content flex-col lg:flex-row">
             <img src="/frens.png" className="basis-2/5 max-w-sm mr-0 md:mr-20 rounded-lg shadow-2xl"/>
             <div className="basis-3/5">
-              <h1 className="text-5xl font-bold ">Stake with Frens!</h1>
-              <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+              <h1 className="text-5xl font-bold text-white">Stake with Frens!</h1>
+              <p className="text-xl py-6 text-white">Spin up a staking pool so ur frens can stake via their favorite crypto degen</p>
               <Link href="/operator">
                 <a className="btn btn-primary text-white bg-gradient-to-r from-pink-500 to-violet-500">Get Started</a>
               </Link>
