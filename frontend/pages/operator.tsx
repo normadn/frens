@@ -16,7 +16,7 @@ const Operator: NextPage = () => {
   const [poolContract, setPoolContract] = useState("")
   const [tokenCode, setTokenCode] = useState("abcdef")
   const [step, setStep] = useState(1)
-  const [depositFileData, setDepositFileData] = useState("")
+  const [depositFileData, setDepositFileData] = useState()
 
   return (
     <div className="bg-gradient-to-r from-cyan-400 to-blue-300" data-theme="winter">
@@ -70,10 +70,10 @@ const Operator: NextPage = () => {
             <p>and upload the deposit file here</p>
             <DropKeys onFileReceived={(data) => {
               const depositData = JSON.parse(data);
-              setDepositFileData(depositData);
+              setDepositFileData(depositData[0]);
             }} />
-            <SelectOperator setTokenCode={setTokenCode} setStep={setStep} />
             <Stake address={poolAddress as string} depositdata={depositFileData} />
+            <SelectOperator setTokenCode={setTokenCode} setStep={setStep} />
           </div>
         </div>
       </main>

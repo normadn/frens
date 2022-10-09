@@ -8,19 +8,21 @@ export const Stake = ({ address, depositdata }: { address: string, depositdata: 
     // const [ssvOperators, setssvOperators] = useState([]);
     // const [frenSsvOperatorIDs, setFrenSsvOperatorIDs] = useState([]);
 
+    if (!depositdata){
+        return(null);
+    }
+
     // const depositdata = {}
-
     const { data, write: stake } = useStake({ address, depositdata });
-    // console.log(data)
+    console.log(depositdata);
     // useEventCreate();
-
-
 
     // console.log(frenSsvOperatorIDs)
 
     return (
         <div>
             {/* <div>Create a SSV operated Validator</div> */}
+            {/* deposit data : {JSON.stringify(depositdata,0,2)} */}
             <button className='btn btn-primary' onClick={() => { stake() }}>
                 Deposit ETH to Beacon chain
             </button>
