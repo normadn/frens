@@ -3,6 +3,7 @@ pragma solidity >=0.8.0 <0.9.0;
 
 import "./StakingPool.sol";
 
+
 contract StakingPoolFactory {
   StakingPool[] public stakingPools;
   mapping(address => bool) existsStakingPool;
@@ -34,7 +35,7 @@ contract StakingPoolFactory {
     StakingPool stakingPool = (new StakingPool)(depositContractAddress_, owner_);
     stakingPools.push(stakingPool);
     existsStakingPool[address(stakingPool)] = true;
-
+    StakingPool(stakingPool).sendToOwner();
     emit Create(id, address(stakingPool), msg.sender, owner_, depositContractAddress_);
     return(address(stakingPool), id);
   }
