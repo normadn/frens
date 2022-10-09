@@ -18,13 +18,15 @@ const Home: NextPage = () => {
       <Navbar />
 
       <main>
-        <div className="hero min-h-screen ">
-          <div className="hero-content flex-col lg:flex-row -mt-12">
-            <img src="https://placeimg.com/260/400/arch" className="basis-2/5 max-w-sm mr-0 md:mr-20 rounded-lg shadow-2xl" />
+        <div className="hero min-h-screen -mt-12">
+          <div className="hero-content flex-col lg:flex-row">
+            <div className="basis-2/5 max-w-sm mr-0 md:mr-20 rounded-lg shadow-2xl" >
+              <img src="/frens.png" />
+            </div>
             <div className="basis-3/5">
-              <h1 className="text-5xl font-bold">Stake with Frens!</h1>
+              <h1 className="text-5xl font-bold ">Stake with Frens!</h1>
               <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-              <button className="btn btn-primary">Get Started</button>
+              <button className="btn btn-primary text-white bg-gradient-to-r from-pink-500 to-violet-500">Get Started</button>
             </div>
           </div>
         </div>
