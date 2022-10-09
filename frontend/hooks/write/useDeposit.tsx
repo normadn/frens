@@ -1,13 +1,13 @@
 import { ethers } from 'ethers';
 import {
   useAccount,
-    usePrepareContractWrite,
-    useContractWrite,
-    useNetwork
-  } from "wagmi";
+  usePrepareContractWrite,
+  useContractWrite,
+  useNetwork
+} from "wagmi";
 import StakingPool from "../../utils/StakingPool.json";
 
-export function useDeposit({ address, val } : { address: string , val: string }) {
+export function useDeposit({ address, val }: { address: string, val: string }) {
   // const { chain } = useNetwork();
   // const contractAddr =
   //   chain?.name === "Goerli"
@@ -22,7 +22,7 @@ export function useDeposit({ address, val } : { address: string , val: string })
     functionName: 'deposit',
     args: [connectedWallet],
     overrides: {
-        value: ethers.utils.parseEther(val),
+      value: ethers.utils.parseEther(val),
     },
   })
   const { data, isLoading, isSuccess, write } = useContractWrite(config)

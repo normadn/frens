@@ -10,6 +10,7 @@ import { OperatorWidget } from 'components/operatorWidget';
 import { PoolInfo } from 'components/poolInfo';
 import { NftGallery } from 'react-nft-gallery';
 import { useAccount } from "wagmi"
+import { useState } from 'react';
 
 const Investor: NextPage = () => {
   const poolAddress = useRouter().query["pool"];
@@ -20,9 +21,9 @@ const Investor: NextPage = () => {
 
   // const poolAddress = "0x7cDDfE5FdECFA8156eF8cBf2b9f7741334bd6df6"
 
-  const { write: deposit } = useDeposit({ address: poolAddress, val: "2" });
-
   const { isConnected, address } = useAccount()
+  const [stakeAmount, setStakeAmount] = useState<string>("0");
+  const { write: deposit } = useDeposit({ address: poolAddress as string, val: stakeAmount });
 
   return (
     <div className="{styles.container}" data-theme="winter">
@@ -38,13 +39,10 @@ const Investor: NextPage = () => {
 
       <OperatorWidget operatorAddress='0x9b18e9e9aa3dD35100b385b7035C0B1E44AfcA14' />
 
-
-
       <main className={styles.main}>
         {(!isConnected || !address) && (
           <>
             <p>Connect your wallet to stake in this pool</p>
-            {stakeForm}
           </>
         )}
 
@@ -53,11 +51,12 @@ const Investor: NextPage = () => {
             <PoolInfo address={poolAddress} />
             <DepositProgressBarComponent />
 
+            <StakeFormComponent setStake={setStakeAmount}></StakeFormComponent>
             <h1 className="text-3xl font-bold underline">
               Stake now
             </h1>
             <br />
-            <button className="btn btn-primary" disabled={!deposit} onClick={() => deposit?.()}>
+            <button className="btn btn-primary" onClick={() => deposit}>
               Deposit
             </button>
 
@@ -68,7 +67,6 @@ const Investor: NextPage = () => {
               hasLightbox={false}
               isInline={true}
             />
-
           </>
         )}
 
