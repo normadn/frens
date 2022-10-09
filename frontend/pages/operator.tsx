@@ -7,6 +7,7 @@ import { InviteFrens } from 'components/inviteFrens';
 import { CreatePool } from 'components/createPool';
 import { SelectOperator } from 'components/selectOperator';
 import { DropKeys } from 'components/dropKeys';
+import { PoolInfo } from 'components/poolInfo';
 import { DepositProgressBarComponent } from 'components/shared/depositProgressBarComponent';
 import { Stake } from 'components/stake';
 
@@ -53,8 +54,8 @@ const Operator: NextPage = () => {
           <h1 className="text-3xl font-bold">
             3️⃣  Watch pool fill
           </h1>
-          <div className={`${step == 3 ? "block" : "hidden"}`}>
-            <DepositProgressBarComponent />
+          <div className={`${step == 3 ? "block w-2/3" : "hidden"}`}>
+            <PoolInfo address={poolContract}/>
           </div>
         </div>
 
