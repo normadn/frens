@@ -24,6 +24,7 @@ const Investor: NextPage = () => {
   const { isConnected, address } = useAccount()
   const [stakeAmount, setStakeAmount] = useState<string>("0");
   const { write: deposit } = useDeposit({ address: poolAddress as string, val: stakeAmount });
+  // const { write: deposit } = useDeposit({ address: "0x7cDDfE5FdECFA8156eF8cBf2b9f7741334bd6df6", val: "4" });
 
   return (
     <div className="{styles.container}" data-theme="winter">
@@ -56,17 +57,19 @@ const Investor: NextPage = () => {
               Stake now
             </h1>
             <br />
-            <button className="btn btn-primary" onClick={() => deposit}>
+            <button className="btn btn-primary" onClick={() => {
+              deposit();
+            }}>
               Deposit
             </button>
 
             <h1 className="text-3xl font-bold underline">NFT gallery</h1>
-            <NftGallery
+            {/* <NftGallery
               ownerAddress={address}
               apiUrl="https://testnets-api.opensea.io"
               hasLightbox={false}
               isInline={true}
-            />
+            /> */}
           </>
         )}
 

@@ -16,6 +16,8 @@ export function useDeposit({ address, val }: { address: string, val: string }) {
 
   const { address: connectedWallet, connector, isConnected } = useAccount()
 
+
+
   const { config } = usePrepareContractWrite({
     addressOrName: address,
     contractInterface: StakingPool.abi,
@@ -26,6 +28,10 @@ export function useDeposit({ address, val }: { address: string, val: string }) {
     },
   })
   const { data, isLoading, isSuccess, write } = useContractWrite(config)
-
+  console.log("loading", isLoading);
+  console.log("data", data);
+  console.log("wallet",connectedWallet);
+  console.log("val",val);
+  console.log("address",address);
   return { data, isLoading, isSuccess, write };
 }
