@@ -17,16 +17,16 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   const { deployer } = await getNamedAccounts();
   const chainId = await getChainId();
 
-  await deploy("StakingPoolFactory", {
+  await deploy("StakingPool", {
     // Learn more about args here: https://www.npmjs.com/package/hardhat-deploy#deploymentsdeploy
     from: deployer,
-    //args: [ "0x00000000219ab540356cBB839Cbe05303d7705Fa" ],
+    args: [ "0x00000000219ab540356cBB839Cbe05303d7705Fa", "0x521B2cE927FD6d0D473789Bd3c70B296BBce613e" ],
     log: true,
     waitConfirmations: 5,
   });
 
   // Getting a previously deployed contract
-  const StakingPoolFactory = await ethers.getContract("StakingPoolFactory", deployer);
+  const StakingPool = await ethers.getContract("StakingPool", deployer);
   /*  await StakingPool.setPurpose("Hello");
 
     To take ownership of stakingPool using the ownable library uncomment next line and add the
@@ -64,16 +64,16 @@ module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
 
   // You can also Verify your contracts with Etherscan here...
   // You don't want to verify on localhost
-/*try {
+  /*try {
      if (chainId !== localChainId) {
        await run("verify:verify", {
          address: StakingPool.address,
          contract: "contracts/StakingPool.sol:StakingPool",
-         contractArguments: [],
+         contractArguments: [ "0x00000000219ab540356cBB839Cbe05303d7705Fa", "0x521B2cE927FD6d0D473789Bd3c70B296BBce613e" ],
        });
      }
    } catch (error) {
      console.error(error);
    }*/
 };
-module.exports.tags = ["StakingPoolFactory"];
+module.exports.tags = ["StakingPool"];

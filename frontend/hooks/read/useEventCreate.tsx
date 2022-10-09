@@ -5,7 +5,7 @@ export function useEventCreate() {
     const { chain } = useNetwork();
     const contractAddr =
         chain?.name === "Goerli"
-        ? "0x7d5D057f8b50e2D39bDD84cC12e110Fe46f0257f"
+        ? "0x7b24022a3c62A20B19Fa48b919433De1a87B3A78"
         : "0x00000000000000000000000000000000deadb33f"; // TODO :)
 
     useContractEvent({

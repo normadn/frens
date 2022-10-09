@@ -26,7 +26,7 @@ const { isAddress, getAddress, formatUnits, parseUnits } = utils;
 //
 // Select the network you want to deploy to here:
 //
-const defaultNetwork = "localhost";
+const defaultNetwork = "goerli";
 
 const mainnetGwei = 21;
 
@@ -66,10 +66,11 @@ module.exports = {
   networks: {
     localhost: {
       url: "http://localhost:8545",
-      /*      
+
+      /*
         notice no mnemonic here? it will just use account 0 of the hardhat node to deploy
         (you can put in a mnemonic here to set the deployer locally)
-      
+
       */
     },
     rinkeby: {
@@ -263,12 +264,13 @@ module.exports = {
   solidity: {
     compilers: [
       {
-        version: "0.8.4",
+        version: "0.8.16",
         settings: {
           optimizer: {
             enabled: true,
             runs: 200,
           },
+          viaIR: true,
         },
       },
       {
@@ -292,7 +294,8 @@ module.exports = {
   },
   etherscan: {
     apiKey: {
-      mainnet: "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW",
+      mainnet: "1369MW881SKMW5GM4JCFSM5623ZXA9ERUD",
+      goerli: "1369MW881SKMW5GM4JCFSM5623ZXA9ERUD"
       // add other network's API key here
     },
   },
