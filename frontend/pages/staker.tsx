@@ -41,7 +41,10 @@ const Investor: NextPage = () => {
 
       <main className={styles.main}>
         {(!isConnected || !address) && (
-          <p>Connect your wallet to stake in this pool</p>
+          <>
+            <p>Connect your wallet to stake in this pool</p>
+            {stakeForm}
+          </>
         )}
 
         {isConnected && address && (
@@ -52,8 +55,6 @@ const Investor: NextPage = () => {
             <h1 className="text-3xl font-bold underline">
               Stake now
             </h1>
-            {/* {tokenText} */}
-            {/* {stakeForm} */}
             <br />
             <button className="btn btn-primary" disabled={!deposit} onClick={() => deposit?.()}>
               Deposit
@@ -77,7 +78,7 @@ const Investor: NextPage = () => {
           Made with ❤️ by your frens at 🌈
         </a>
       </footer>
-    </div>
+    </div >
   );
 };
 
