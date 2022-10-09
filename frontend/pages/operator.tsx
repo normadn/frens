@@ -1,17 +1,21 @@
 import { useState, useEffect } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import Navbar from 'components/navbar';
 import { InviteFrens } from 'components/inviteFrens';
 import { CreatePool } from 'components/createPool';
 import { SelectOperator } from 'components/selectOperator';
 import { DropKeys } from 'components/dropKeys';
 import { DepositProgressBarComponent } from 'components/shared/depositProgressBarComponent';
+import { Stake } from 'components/stake';
 
 const Operator: NextPage = () => {
+  const poolAddress = useRouter().query["pool"];
   const [poolContract, setPoolContract] = useState("")
   const [tokenCode, setTokenCode] = useState("abcdef")
   const [step, setStep] = useState(1)
+  const [depositFileData, setDepositFileData] = useState("")
 
   return (
     <div className="bg-gradient-to-r from-cyan-400 to-blue-300" data-theme="winter">
@@ -50,7 +54,7 @@ const Operator: NextPage = () => {
             3️⃣  Watch pool fill
           </h1>
           <div className={`${step == 3 ? "block" : "hidden"}`}>
-            <DepositProgressBarComponent/>
+            <DepositProgressBarComponent />
           </div>
         </div>
 
@@ -58,9 +62,17 @@ const Operator: NextPage = () => {
           <h1 className="text-3xl font-bold">
             4️⃣ Start your SSV validator
           </h1>
-          <div className={`${step == 4 ? "block" : "hidden"}`}>
+          {/* <div className={`${step == 4 ? "block" : "hidden"}`}> */}
+          <div>
+            <p>Now first create staking keys using this command</p>
+            <div><b>deposit --eth1_withdrawal_address {poolAddress}</b></div>
+            <p>and upload the deposit file here</p>
+            <DropKeys onFileReceived={(data) => {
+              const depositData = JSON.parse(data);
+              setDepositFileData(depositData);
+            }} />
             <SelectOperator setTokenCode={setTokenCode} setStep={setStep} />
-            <DropKeys />
+            <Stake address={poolAddress as string} depositdata={depositFileData} />
           </div>
         </div>
       </main>
