@@ -6,15 +6,15 @@ import {
   } from "wagmi";
 import StakingPool from "../../utils/StakingPool.json";
 
-export function useDeposit({ val } : { val: string }) {
-  const { chain } = useNetwork();
-  const contractAddr =
-    chain?.name === "Goerli"
-      ? "0xf47ec3825eC5161d952278648fb2F3B747B8d347"
-      : "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+export function useDeposit({ address, val } : { address: string, val: string }) {
+  // const { chain } = useNetwork();
+  // const contractAddr =
+  //   chain?.name === "Goerli"
+  //     ? "0xf47ec3825eC5161d952278648fb2F3B747B8d347"
+  //     : "0x00000000000000000000000000000000deadb33f";
 
   const { config } = usePrepareContractWrite({
-    addressOrName: contractAddr,
+    addressOrName: address,
     contractInterface: StakingPool.abi,
     functionName: 'deposit',
     overrides: {

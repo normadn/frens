@@ -7,6 +7,7 @@ import { useDeposit } from '../hooks/write/useDeposit';
 import { StakeFormComponent } from 'components/staker/stakeFormComponent';
 import { DepositProgressBarComponent } from 'components/shared/depositProgressBarComponent';
 import { OperatorWidget } from 'components/operatorWidget';
+import { PoolInfo } from 'components/poolInfo';
 
 const Investor: NextPage = () => {
   const token = useRouter().query["token"]
@@ -17,7 +18,7 @@ const Investor: NextPage = () => {
     stakeForm = <StakeFormComponent></StakeFormComponent>
   }
 
-  const { write: deposit } = useDeposit({ val: "2" });
+  const { write: deposit } = useDeposit({ address: "0xe329f6685db5003706d024e087017dc8aea6dac5", val: "2" });
 
   return (
     <div className={styles.container} data-theme="winter">
@@ -33,13 +34,15 @@ const Investor: NextPage = () => {
 
       <OperatorWidget operatorAddress='0x9b18e9e9aa3dD35100b385b7035C0B1E44AfcA14' />
 
+      <PoolInfo />
+
       <main className={styles.main}>
         <DepositProgressBarComponent />
         <h1 className="text-3xl font-bold underline">
           Stake now
         </h1>
-        {tokenText}
-        {stakeForm}
+        {/* {tokenText} */}
+        {/* {stakeForm} */}
         <br />
         <button className="btn btn-primary" disabled={!deposit} onClick={() => deposit?.()}>
           Deposit

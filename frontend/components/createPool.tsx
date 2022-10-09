@@ -12,6 +12,9 @@ export const CreatePool = ({setTokenCode, setStep, setPoolContract}) => {
     function onCreatePool(): void {
         const inviteToken = Math.random().toString(36).substring(2, INVITATION_TOKEN_LENGTH);
         setTokenCode(inviteToken);
+
+        setStep(2);
+
         createPool();
     }
 
