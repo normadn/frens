@@ -14,7 +14,7 @@ const Operator: NextPage = () => {
   const [step, setStep] = useState(1)
 
   return (
-    <div className="" data-theme="winter">
+    <div className="bg-gradient-to-r from-cyan-400 to-blue-300" data-theme="winter">
       <Head>
         <title>frens | operator</title>
         <meta
@@ -26,8 +26,8 @@ const Operator: NextPage = () => {
 
       <Navbar />
 
-      <main className="flex flex-col justify-center items-center min-h-screen -mt-20 bg-slate-200">
-        <div className="w-2/3 flex flex-col items-center border-2 border-blue-500 rounded-md mb-4 p-3 bg-white">
+      <main className="flex flex-col justify-center items-center min-h-screen -mt-20">
+        <div className="w-2/3 flex flex-col items-center border-2 border-violet-500 rounded-md mb-4 p-3 bg-white">
           <h1 className="text-3xl font-bold">
             1️⃣ Create Pool
           </h1>
@@ -36,16 +36,16 @@ const Operator: NextPage = () => {
           </div>
         </div>
 
-        <div className="w-2/3 flex flex-col items-center border-2 border-blue-500 rounded-md mb-4 p-3 bg-white">
+        <div className="w-2/3 flex flex-col items-center border-2 border-violet-500 rounded-md mb-4 p-3 bg-white">
           <h1 className="text-3xl font-bold">
             2️⃣ Invite frens
           </h1>
           <div className={`${step == 2 ? "block" : "hidden"}`}>
-            <InviteFrens tokenCode={tokenCode} poolContract={poolContract} />
+            <InviteFrens tokenCode={tokenCode} poolContract={poolContract} setStep={setStep} />
           </div>
         </div>
 
-        <div className="w-2/3 flex flex-col items-center border-2 border-blue-500 rounded-md mb-4 p-3 bg-white">
+        <div className="w-2/3 flex flex-col items-center border-2 border-violet-500 rounded-md mb-4 p-3 bg-white">
           <h1 className="text-3xl font-bold">
             3️⃣  Watch pool fill
           </h1>
@@ -54,7 +54,7 @@ const Operator: NextPage = () => {
           </div>
         </div>
 
-        <div className="w-2/3 flex flex-col items-center border-2 border-blue-500 rounded-md mb-4 p-3 bg-white">
+        <div className="w-2/3 flex flex-col items-center border-2 border-violet-500 rounded-md mb-4 p-3 bg-white">
           <h1 className="text-3xl font-bold">
             4️⃣ Start your SSV validator
           </h1>

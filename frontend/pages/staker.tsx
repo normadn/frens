@@ -26,7 +26,7 @@ const Investor: NextPage = () => {
   const { write: deposit } = useDeposit({ address: poolAddress as string, val: stakeAmount });
 
   return (
-    <div className={styles.container} data-theme="winter">
+    <div className="{styles.container}" data-theme="winter">
       <Head>
         <title>frens | investor</title>
         <meta

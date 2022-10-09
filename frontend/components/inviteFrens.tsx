@@ -1,9 +1,4 @@
-interface InviteFrensProps {
-  tokenCode: string;
-  poolContract: string;
-}
-
-export const InviteFrens = ({ tokenCode, poolContract }: InviteFrensProps) => {
+export const InviteFrens = ({ tokenCode, poolContract, setStep }) => {
   const link = `https://frens-network.vercel.app/staker?token=${tokenCode}?pool=${poolContract}`
 
   function copyToClipboard(copyMe: string): void {
@@ -11,9 +6,18 @@ export const InviteFrens = ({ tokenCode, poolContract }: InviteFrensProps) => {
   }
 
   return (
-    <div>
-      <h2 className='title'>{link}</h2>
-      <button className='btn' onClick={() => copyToClipboard(link)}>Copy to clipboard</button>
+    <div className="flex flex-col justify-center">
+      <div className='my-2'>{link}</div>
+      <div className="flex justify-center">
+        <button 
+          className='btn bg-gradient-to-r from-pink-500 to-violet-500 text-white'
+          onClick={() => {
+            copyToClipboard(link)
+            setStep(3)
+          }}>
+          Copy to clipboard
+        </button>
+      </div>
     </div>
   );
 };
