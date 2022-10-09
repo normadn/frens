@@ -6,7 +6,7 @@ import { DepositProgressBarComponent } from 'components/shared/depositProgressBa
 
 const errorClassForInput = "input-error"
 
-export const StakeFormComponent = () => {
+export const StakeFormComponent = ({ setStake }) => {
     const { isConnected, address } = useAccount()
     const { data } = useBalance({
         addressOrName: address,
@@ -20,7 +20,7 @@ export const StakeFormComponent = () => {
                         <span className="label-text">Enter amount</span>
                     </label>
                     <label className="input-group">
-                        <input onChange={(event) => handleUserInput(event, data.formatted)} id="ethInput" type="text" placeholder="0.00" className="input input-bordered" />
+                        <input onChange={(event) => handleUserInput(event, data.formatted, setStake)} id="ethInput" type="text" placeholder="0.00" className="input input-bordered" />
                         <span>ETH</span>
                     </label>
                 </div >
@@ -35,16 +35,17 @@ export const StakeFormComponent = () => {
     }
 }
 
-function handleUserInput(event: ChangeEvent<HTMLInputElement>, formattedBalance: string): void {
+function handleUserInput(event: ChangeEvent<HTMLInputElement>, formattedBalance: string, setStake): void {
     const stringValue = event.target.value
     if (stringValue.length !== 0) {
         const balance = parseFloat(formattedBalance)
         const value = parseFloat(stringValue)
         const ethInput = document.getElementById("ethInput")
-        const validState = value > balance
-        if (validState) {
+        const invalidState = value > balance
+        if (invalidState) {
             ethInput.classList.add(errorClassForInput)
         } else {
+            setStake(stringValue)
             ethInput.classList.remove(errorClassForInput)
         }
     }
