@@ -4,11 +4,12 @@ import { useCreatePool } from '../hooks/write/useCreatePool';
 
 const INVITATION_TOKEN_LENGTH = 9
 
-export const SelectOperator = ({setTokenCode, setStep}) => {
+export const SelectOperator = ({ setTokenCode, setStep }) => {
     const [ssvOperators, setssvOperators] = useState([]);
+    const [operatorList, setOperatorList] = useState((<></>));
     const [frenSsvOperatorIDs, setFrenSsvOperatorIDs] = useState([]);
 
-    const { data, write:createPool } = useCreatePool();
+    const { data, write: createPool } = useCreatePool();
     // console.log(data)
     useEventCreate();
 
@@ -32,33 +33,48 @@ export const SelectOperator = ({setTokenCode, setStep}) => {
             .catch(console.error);
     }, []);
 
-    function onCreatePool(): void {
-        const inviteToken = Math.random().toString(36).substring(2, INVITATION_TOKEN_LENGTH);
-        setTokenCode(inviteToken);
+    // function onCreatePool(): void {
+    //     const inviteToken = Math.random().toString(36).substring(2, INVITATION_TOKEN_LENGTH);
+    //     setTokenCode(inviteToken);
 
-        setStep(2);
+    //     setStep(2);
 
-        createPool();
-    }
+    //     createPool();
+    // }
 
-    let operatorList = ssvOperators?.map((item, i) => {
+    let operatorListLines = ssvOperators?.map((item, i) => {
         return (
-            <option key={i} value={item}>
-                {item.name}
-            </option>
+            <tr key={i}>
+                <td><input type="checkbox" />&nbsp;&nbsp;</td>
+                <td>{item.name} &nbsp;&nbsp;&nbsp;</td>
+                <td>{parseFloat(item.performance["24h"]).toFixed(2)}%</td>
+            </tr>
         );
     });
 
+    let operatorListTable = (
+        <table>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>24h performance</th>
+            </tr>
+            {operatorListLines}
+        </table>
+    )
+
+    // setOperatorList(operatorListTable);
+    
     // console.log(frenSsvOperatorIDs)
 
     return (
         <div>
-            <div>Create a SSV operated Validator</div>
-            <div>You can select 3 other operators to run you DVT secured validator</div>
-            <div>{operatorList}</div>
-            <button className='btn btn-primary' onClick={() => onCreatePool()}>
-                create Pool
-            </button>
+            {/* <div>Create a SSV operated Validator</div> */}
+            <div>Please select 3 other operators to run you DVT secured validator</div>
+            <div>{operatorListTable ? operatorListTable : ""}</div>
+            {/* <button className='btn btn-primary' onClick={() => onCreatePool()}>
+                Deposit ETH to Beacon chain
+            </button> */}
         </div>
     );
 };
