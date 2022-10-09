@@ -14,17 +14,8 @@ type Props = {
 export const OperatorWidget = ({ operatorAddress }: Props) => {
 
     // https://wagmi.sh/docs/hooks/useEnsAvatar
-    
-    const { data: ensAvatar, isError: isAvatarError, isLoading: isAvatarLoading } = useEnsAvatar({
-        // addressOrName: ensName,
-        addressOrName: "heeckhau.eth",
-        chainId: chainId,
-        cacheTime: 1_000,
-        onSettled(data, error) {
-            console.log('Settled', { data, error })
-        }
-    })
 
+    
     const { data: ensName, isError: isEnsNameError, isLoading: isEnsNameLoading } = useEnsName({
         address: operatorAddress,
         chainId: chainId,
@@ -33,7 +24,16 @@ export const OperatorWidget = ({ operatorAddress }: Props) => {
             console.log('Settled', { data, error })
         }
     })
-
+    
+    const { data: ensAvatar, isError: isAvatarError, isLoading: isAvatarLoading } = useEnsAvatar({
+        addressOrName: ensName,
+        // addressOrName: "heeckhau.eth",
+        chainId: chainId,
+        cacheTime: 1_000,
+        onSettled(data, error) {
+            console.log('Settled', { data, error })
+        }
+    })
 
     return (
         <>
