@@ -9,7 +9,7 @@ export function useCreatePool() {
   const { chain } = useNetwork();
   const contractAddr =
     chain?.name === "Goerli"
-      ? "0x0eaA2B7472d169C038817133a1E87aFED8f01996"
+      ? "0x7d5D057f8b50e2D39bDD84cC12e110Fe46f0257f"
       : "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
 
   const { config } = usePrepareContractWrite({

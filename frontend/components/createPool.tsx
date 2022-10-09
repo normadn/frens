@@ -1,65 +1,59 @@
-import { useState, useEffect } from 'react';
+import { useContractEvent } from "wagmi";
 import { useCreatePool } from '../hooks/write/useCreatePool';
-import { useSSVReadTest } from '../hooks/read/useSSVReadTest';
+import StakingPoolFactory from "../utils/StakingPoolFactory.json";
 
 const INVITATION_TOKEN_LENGTH = 9
 
 export const CreatePool = ({setTokenCode, setStep}) => {
-    const [ssvOperators, setssvOperators] = useState([]);
-    const [frenSsvOperatorIDs, setFrenSsvOperatorIDs] = useState([]);
 
-    // const { data, isError, isLoading } = useSSVReadTest()
-    // console.log(data)
-
-    const { data, write:createPool } = useCreatePool();
-
-    useEffect(() => {
-        const fetchOperators = async () => {
-            const data = await fetch('https://api.ssv.network/api/v1/operators/graph?page=1&perPage=10');
-            const json = await data.json();
-            setssvOperators(json.operators);
-        }
-
-        const fetchFrenOperator = async () => {
-            const data = await fetch('https://api.ssv.network/api/v1/operators/owned_by/0x9b18e9e9aa3dD35100b385b7035C0B1E44AfcA14?page=1&perPage=10');
-            const json = await data.json();
-            setFrenSsvOperatorIDs(json.operators);
-        }
-
-        fetchOperators()
-            .catch(console.error);
-
-        fetchFrenOperator()
-            .catch(console.error);
-    }, []);
+    const { data, isLoading, write:createPool } = useCreatePool();
+    let etherscanLink = ""
 
     function onCreatePool(): void {
         const inviteToken = Math.random().toString(36).substring(2, INVITATION_TOKEN_LENGTH);
         setTokenCode(inviteToken);
-
-        setStep(2);
-
-        // createPool();
+        createPool();
     }
 
-    let operatorList = ssvOperators?.map((item, i) => {
-        return (
-            <option key={i} value={item}>
-                {item.name}
-            </option>
-        );
-    });
+    useContractEvent({
+        addressOrName: "0x7d5D057f8b50e2D39bDD84cC12e110Fe46f0257f",
+        contractInterface: StakingPoolFactory.abi,
+        eventName: 'Create',
+        listener: (event) => {
+            console.log(event);
+            setStep(2);
+        },
+    })
 
-    // console.log(frenSsvOperatorIDs)
+    if(data){
+        etherscanLink = `https://goerli.etherscan.io/tx/${data.hash}`
+    }
 
     return (
         <div>
-            <div>Create a SSV operated Validator</div>
-            <div>You can select 3 other operators to run you DVT secured validator</div>
-            <div>{operatorList}</div>
-            <button className='btn btn-primary' onClick={() => onCreatePool()}>
-                create Pool
-            </button>
+            <div className='my-2'>Create a staking pool so ur frens can stake with u!</div>
+            
+            <div className='flex items-center justify-center mt-4 mb-2'>
+                {data ?
+                    <div>
+                        <a className="underline text-blue-500" href={etherscanLink} target="_blank" rel="noopener noreferrer">
+                            tx on etherscan
+                        </a>
+                    </div>
+                    :
+                    <div>
+                        {isLoading ? 
+                            <button disabled className='btn btn-primary text-white'>
+                                Loading
+                            </button>
+                            :
+                            <button className='btn btn-primary text-white' onClick={() => onCreatePool()}>
+                                Create Pool
+                            </button>
+                        }
+                    </div>
+                }
+            </div>
         </div>
     );
 };
