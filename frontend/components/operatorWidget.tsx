@@ -36,13 +36,13 @@ export const OperatorWidget = ({ operatorAddress }: Props) => {
     })
 
     return (
-        <div className="w-2/3 mt-4">
+        <div className="w-full md:w-3/5 mt-4">
             <figure className="md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800">
                 <img className="w-24 h-24 md:w-48 md:h-auto rounded-full mx-auto" src={ensAvatar} alt={ensName} width="384" />
                 <div className="pt-6 pr-8 text-center md:text-left space-y-4">
                     <blockquote>
                         <h1 className="text-lg font-medium text-white">
-                            Your frens pool operator
+                            Your frenly pool operator
                         </h1>
                     </blockquote>
                     <figcaption className="font-medium">

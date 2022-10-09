@@ -18,9 +18,19 @@ export const PoolInfo = ({address}) => {
     // }
 
     return (
-        <div className='border-2 border-blue-500 rounded-md'>
-            <div>Pool {address} </div>
-            <div>Balance {totaldeposits?.toString()}</div>
+        <div className='my-4 px-6'>
+            <div className='flex justify-between'>
+                <div>Staking Rewards</div>
+                <div>8%</div> 
+            </div>
+            <div className='flex justify-between'>
+                <div>Current Pool Balance</div>
+                <div>{totaldeposits?.toString()}</div> 
+            </div>
+            <div className='flex justify-between'>
+                <div>Pool</div>
+                <div>{address}</div> 
+            </div>
         </div>
     );
 };

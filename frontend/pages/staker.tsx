@@ -1,16 +1,16 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import styles from '../styles/Home.module.css';
+import { useAccount } from "wagmi"
+import { useState } from 'react';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { NftGallery } from 'react-nft-gallery';
 import Navbar from 'components/navbar';
 import { useDeposit } from '../hooks/write/useDeposit';
 import { StakeFormComponent } from 'components/staker/stakeFormComponent';
 import { DepositProgressBarComponent } from 'components/shared/depositProgressBarComponent';
 import { OperatorWidget } from 'components/operatorWidget';
 import { PoolInfo } from 'components/poolInfo';
-import { NftGallery } from 'react-nft-gallery';
-import { useAccount } from "wagmi"
-import { useState } from 'react';
 
 const Investor: NextPage = () => {
   const poolAddress = useRouter().query["pool"];
@@ -27,7 +27,7 @@ const Investor: NextPage = () => {
   // const { write: deposit } = useDeposit({ address: "0x7cDDfE5FdECFA8156eF8cBf2b9f7741334bd6df6", val: "4" });
 
   return (
-    <div className="bg-gradient-to-r from-cyan-400 to-blue-300" data-theme="winter">
+    <div className="bg-gradient-to-r from-cyan-400 to-blue-300 min-h-screen" data-theme="winter">
       <Head>
         <title>frens | staker</title>
         <meta
@@ -36,42 +36,39 @@ const Investor: NextPage = () => {
         />
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧑‍🤝‍🧑</text></svg>" />
       </Head>
+      
       <Navbar />
-
 
       <main className="flex flex-col justify-center items-center">
         <OperatorWidget operatorAddress='0x9b18e9e9aa3dD35100b385b7035C0B1E44AfcA14' />
-        {(!isConnected || !address) && (
-          <div className='text-white'>
-            <p>Connect your wallet to stake in this pool</p>
+
+        <div className='w-3/5 border-2 border-violet-500 rounded-md bg-white mt-6'>
+          {/* <DepositProgressBarComponent /> */}
+
+          <StakeFormComponent setStake={setStakeAmount}/>
+          
+          <div className='flex justify-center mt-2 mb-4'>
+            { isConnected ?
+              <button className="btn text-white bg-gradient-to-r from-pink-500 to-violet-500" onClick={() => {deposit()}}>
+                Deposit
+              </button>
+              :
+              <ConnectButton/>
+            }
           </div>
-        )}
+          <div className='border border-violet-500 rounded-md mx-4'></div>
+          <PoolInfo address={poolAddress} />
+        </div>
 
-        {isConnected && address && (
-          <div className='text-white'>
-            <PoolInfo address={poolAddress} />
-            <DepositProgressBarComponent />
-
-            <StakeFormComponent setStake={setStakeAmount}></StakeFormComponent>
-            <h1 className="text-3xl font-bold underline">
-              Stake now
-            </h1>
-            <br />
-            <button className="btn btn-primary" onClick={() => {
-              deposit();
-            }}>
-              Deposit
-            </button>
-
-            <h1 className="text-3xl font-bold underline">NFT gallery</h1>
-            <NftGallery
+        <div className={`w-3/5 mt-6 border-2 border-violet-500 rounded-md bg-white ${isConnected ? "block" : "hidden"}`}>
+          <div className='text-center font-bold my-2'>Ur current pool stakes</div>
+          <NftGallery
               ownerAddress={address}
               apiUrl="https://testnets-api.opensea.io"
               hasLightbox={false}
               isInline={true}
-            />
-          </div>
-        )}
+          />
+        </div>
 
       </main>
 

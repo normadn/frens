@@ -1,38 +1,31 @@
 import { ChangeEvent, useState } from 'react';
 import { BalanceComponent } from "./balanceComponent";
 import { useAccount, useBalance } from "wagmi"
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { DepositProgressBarComponent } from 'components/shared/depositProgressBarComponent';
 
 const errorClassForInput = "input-error"
 
 export const StakeFormComponent = ({ setStake }) => {
-    const { isConnected, address } = useAccount()
+    const {  address } = useAccount()
     const { data } = useBalance({
         addressOrName: address,
     })
-    if (isConnected) {
-        return (
-            <div>
-                <BalanceComponent ethBalance={data.formatted} symbol={data.symbol}></BalanceComponent>
-                <div className="form-control">
-                    <label className="label">
-                        <span className="label-text">Enter amount</span>
-                    </label>
-                    <label className="input-group">
-                        <input onChange={(event) => handleUserInput(event, data.formatted, setStake)} id="ethInput" type="text" placeholder="0.00" className="input input-bordered" />
-                        <span>ETH</span>
-                    </label>
-                </div >
-            </div>
-        );
-    } else {
-        return (
-            <div className="mt-4">
-                <ConnectButton></ConnectButton>
-            </div>
-        )
-    }
+    return (
+        <div>
+            <div className="text-center font-bold my-2">Select amount</div>
+            <label className="input-group flex justify-center">
+                <input 
+                    onChange={(event) => handleUserInput(event, data.formatted, setStake)} 
+                    id="ethInput"
+                    type="text" 
+                    placeholder="0.00" 
+                    className="input input-bordered w-1/3" />
+                <span>ETH</span>
+            </label>
+            {/* <BalanceComponent ethBalance={data.formatted} symbol={data.symbol}></BalanceComponent> */}
+        </div>
+    );
+    
 }
 
 function handleUserInput(event: ChangeEvent<HTMLInputElement>, formattedBalance: string, setStake): void {
