@@ -52,6 +52,6 @@ contract StakingPoolFactory {
       address owner
     ) {
       StakingPool stakingPool = stakingPools[_index];
-      return (address(stakingPool), address(stakingPool).balance, stakingPool.getOwner());
+      return (address(stakingPool), address(stakingPool).balance, stakingPool.owner());
     }
 }
