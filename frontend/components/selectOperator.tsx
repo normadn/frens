@@ -70,8 +70,10 @@ export const SelectOperator = ({ setTokenCode, setStep }) => {
     return (
         <div>
             {/* <div>Create a SSV operated Validator</div> */}
-            <div>Please select 3 other operators to run you DVT secured validator</div>
-            <div>{operatorListTable ? operatorListTable : ""}</div>
+            <div>3. Select three other operators to run you DVT secured validator</div>
+            <div className="flex justify-center">
+                <div>{operatorListTable ? operatorListTable : ""}</div>
+            </div>
             {/* <button className='btn btn-primary' onClick={() => onCreatePool()}>
                 Deposit ETH to Beacon chain
             </button> */}

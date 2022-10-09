@@ -18,12 +18,12 @@ const Operator: NextPage = () => {
   const [step, setStep] = useState(1)
   const [depositFileData, setDepositFileData] = useState()
 
-  // useEffect(() => {
-  //   if (poolAddress) {
-  //     setPoolContract(poolAddress as string);
-  //     setStep(3)
-  //   }
-  // }, [poolAddress])
+  useEffect(() => {
+    if (poolAddress) {
+      setPoolContract(poolAddress as string);
+      setStep(4)
+    }
+  }, [poolAddress])
 
   return (
     <div className="bg-gradient-to-r from-cyan-400 to-blue-300" data-theme="winter">
@@ -38,7 +38,7 @@ const Operator: NextPage = () => {
 
       <Navbar />
 
-      <main className="flex flex-col justify-center items-center min-h-screen -mt-20">
+      <main className="flex flex-col justify-center items-center min-h-[93vh]">
         <div className="w-2/3 flex flex-col items-center border-2 border-violet-500 rounded-md mb-4 p-3 bg-white">
           <h1 className="text-3xl font-bold">
             1️⃣ Create Pool
@@ -52,7 +52,7 @@ const Operator: NextPage = () => {
           <h1 className="text-3xl font-bold">
             2️⃣ Invite frens
           </h1>
-          <div className={`${step >= 2 ? "block" : "hidden"}`}>
+          <div className={`${step == 2 ? "block" : "hidden"}`}>
             <InviteFrens tokenCode={tokenCode} poolContract={poolContract} setStep={setStep} />
           </div>
         </div>
@@ -61,7 +61,7 @@ const Operator: NextPage = () => {
           <h1 className="text-3xl font-bold">
             3️⃣  Watch pool fill
           </h1>
-          <div className={`${step >= 3 ? "block w-2/3" : "hidden"}`}>
+          <div className={`${step == 3 ? "block w-2/3" : "hidden"}`}>
             <PoolInfo address={poolContract} />
           </div>
         </div>
@@ -72,15 +72,21 @@ const Operator: NextPage = () => {
           </h1>
           <div className={`${step == 4 ? "block" : "hidden"}`}>
             <div>
-              <p>Now first create staking keys using this command</p>
-              <div><code>deposit new-mnemonic --eth1_withdrawal_address {poolAddress}</code></div>
-              <p>and upload the deposit file here</p>
-              <DropKeys onFileReceived={(data) => {
-                const depositData = JSON.parse(data);
-                setDepositFileData(depositData[0]);
-              }} />
-              <Stake address={poolAddress as string} depositdata={depositFileData} />
-              <SelectOperator setTokenCode={setTokenCode} setStep={setStep} />
+              <div className="my-2 p-2 border border-slate-700 rounded-md">
+                <p>1. create staking keys using this command:</p>
+                <div><code>deposit new-mnemonic --eth1_withdrawal_address {poolAddress}</code></div>
+              </div>
+              <div className="my-2 p-2 border border-slate-700 rounded-md">
+                <div>2. upload the deposit file here</div>
+                <DropKeys onFileReceived={(data) => {
+                  const depositData = JSON.parse(data);
+                  setDepositFileData(depositData[0]);
+                }} />
+              </div>
+              <div className="my-2 p-2 border border-slate-700 rounded-md">
+                <Stake address={poolAddress as string} depositdata={depositFileData} />
+                <SelectOperator setTokenCode={setTokenCode} setStep={setStep} />
+              </div>
             </div>
           </div>
         </div>

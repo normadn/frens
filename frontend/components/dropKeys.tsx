@@ -58,7 +58,7 @@ export const DropKeys = ({ onFileReceived }: { onFileReceived: any }) => {
     return (
         <>
             <MyDropzone></MyDropzone>
-            <button className="btn btn-primary" disabled={!allow} onClick={() => allow?.()}>
+            <button className="btn btn-primary my-2 mr-2" disabled={!allow} onClick={() => allow?.()}>
                 Allow spending SSV
             </button>
             <button className="btn btn-primary" disabled={true}>
