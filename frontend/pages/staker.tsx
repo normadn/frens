@@ -38,7 +38,7 @@ const Investor: NextPage = () => {
 
       <OperatorWidget operatorAddress='0x9b18e9e9aa3dD35100b385b7035C0B1E44AfcA14' />
 
-      <PoolInfo address={poolAddress} />
+
 
       <main className={styles.main}>
         {(!isConnected || !address) && (
@@ -47,7 +47,7 @@ const Investor: NextPage = () => {
 
         {isConnected && address && (
           <>
-            <PoolInfo />
+            <PoolInfo address={poolAddress} />
             <DepositProgressBarComponent />
 
             <h1 className="text-3xl font-bold underline">
