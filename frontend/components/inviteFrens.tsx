@@ -1,9 +1,10 @@
 interface InviteFrensProps {
   tokenCode: string;
+  poolContract: string;
 }
 
-export const InviteFrens = ({ tokenCode }: InviteFrensProps) => {
-  const link = `https://frens-network.vercel.app/staker?token=${tokenCode}`
+export const InviteFrens = ({ tokenCode, poolContract }: InviteFrensProps) => {
+  const link = `https://frens-network.vercel.app/staker?token=${tokenCode}?pool=${poolContract}`
 
   function copyToClipboard(copyMe: string): void {
     navigator.clipboard.writeText(copyMe)

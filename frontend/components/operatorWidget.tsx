@@ -13,6 +13,8 @@ type Props = {
 
 export const OperatorWidget = ({ operatorAddress }: Props) => {
 
+    // https://wagmi.sh/docs/hooks/useEnsAvatar
+    
     const { data: ensAvatar, isError: isAvatarError, isLoading: isAvatarLoading } = useEnsAvatar({
         // addressOrName: ensName,
         addressOrName: "heeckhau.eth",

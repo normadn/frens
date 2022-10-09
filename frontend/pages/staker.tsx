@@ -8,6 +8,8 @@ import { StakeFormComponent } from 'components/staker/stakeFormComponent';
 import { DepositProgressBarComponent } from 'components/shared/depositProgressBarComponent';
 import { OperatorWidget } from 'components/operatorWidget';
 import { PoolInfo } from 'components/poolInfo';
+import { NftGallery } from 'react-nft-gallery';
+import { useAccount } from "wagmi"
 
 const Investor: NextPage = () => {
   const poolAddress = useRouter().query["pool"];
@@ -19,6 +21,8 @@ const Investor: NextPage = () => {
   // const poolAddress = "0x7cDDfE5FdECFA8156eF8cBf2b9f7741334bd6df6"
 
   const { write: deposit } = useDeposit({ address: poolAddress, val: "2" });
+
+  const { isConnected, address } = useAccount()
 
   return (
     <div className={styles.container} data-theme="winter">
@@ -37,17 +41,35 @@ const Investor: NextPage = () => {
       <PoolInfo address={poolAddress} />
 
       <main className={styles.main}>
-        <DepositProgressBarComponent />
-        <h1 className="text-3xl font-bold underline">
-          Stake now
-        </h1>
-        {/* {tokenText} */}
-        {/* {stakeForm} */}
-        <br />
-        <button className="btn btn-primary" disabled={!deposit} onClick={() => deposit?.()}>
-          Deposit
-        </button>
+        {(!isConnected || !address) && (
+          <p>Connect your wallet to stake in this pool</p>
+        )}
 
+        {isConnected && address && (
+          <>
+            <PoolInfo />
+            <DepositProgressBarComponent />
+
+            <h1 className="text-3xl font-bold underline">
+              Stake now
+            </h1>
+            {/* {tokenText} */}
+            {/* {stakeForm} */}
+            <br />
+            <button className="btn btn-primary" disabled={!deposit} onClick={() => deposit?.()}>
+              Deposit
+            </button>
+
+            <h1 className="text-3xl font-bold underline">NFT gallery</h1>
+            <NftGallery
+              ownerAddress={address}
+              apiUrl="https://testnets-api.opensea.io"
+              hasLightbox={false}
+              isInline={true}
+            />
+
+          </>
+        )}
 
       </main>
 
