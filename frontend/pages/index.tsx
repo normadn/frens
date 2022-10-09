@@ -6,7 +6,7 @@ import Navbar from 'components/navbar';
 
 const Home: NextPage = () => {
   return (
-    <div className="bg-gradient-to-r from-cyan-400 to-blue-300 text-white" data-theme="winter">
+    <div className="bg-gradient-to-r from-cyan-400 to-blue-300" data-theme="winter">
       <Head>
         <title>frens</title>
         <meta

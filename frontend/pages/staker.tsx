@@ -27,9 +27,9 @@ const Investor: NextPage = () => {
   // const { write: deposit } = useDeposit({ address: "0x7cDDfE5FdECFA8156eF8cBf2b9f7741334bd6df6", val: "4" });
 
   return (
-    <div className="{styles.container}" data-theme="winter">
+    <div className="bg-gradient-to-r from-cyan-400 to-blue-300" data-theme="winter">
       <Head>
-        <title>frens | investor</title>
+        <title>frens | staker</title>
         <meta
           name="description"
           content="stake eth via ur trusted degen"
@@ -38,17 +38,17 @@ const Investor: NextPage = () => {
       </Head>
       <Navbar />
 
-      <OperatorWidget operatorAddress='0x9b18e9e9aa3dD35100b385b7035C0B1E44AfcA14' />
 
-      <main className={styles.main}>
+      <main className="flex flex-col justify-center items-center">
+        <OperatorWidget operatorAddress='0x9b18e9e9aa3dD35100b385b7035C0B1E44AfcA14' />
         {(!isConnected || !address) && (
-          <>
+          <div className='text-white'>
             <p>Connect your wallet to stake in this pool</p>
-          </>
+          </div>
         )}
 
         {isConnected && address && (
-          <>
+          <div className='text-white'>
             <PoolInfo address={poolAddress} />
             <DepositProgressBarComponent />
 
@@ -64,22 +64,17 @@ const Investor: NextPage = () => {
             </button>
 
             <h1 className="text-3xl font-bold underline">NFT gallery</h1>
-            {/* <NftGallery
+            <NftGallery
               ownerAddress={address}
               apiUrl="https://testnets-api.opensea.io"
               hasLightbox={false}
               isInline={true}
-            /> */}
-          </>
+            />
+          </div>
         )}
 
       </main>
 
-      <footer className={styles.footer}>
-        <a href="https://rainbow.me" target="_blank" rel="noopener noreferrer">
-          Made with ❤️ by your frens at 🌈
-        </a>
-      </footer>
     </div >
   );
 };
