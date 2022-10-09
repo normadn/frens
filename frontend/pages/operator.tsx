@@ -66,7 +66,7 @@ const Operator: NextPage = () => {
           {/* <div className={`${step == 4 ? "block" : "hidden"}`}> */}
           <div>
             <p>Now first create staking keys using this command</p>
-            <div><b>deposit --eth1_withdrawal_address {poolAddress}</b></div>
+            <div><b>deposit new-mnemonic --eth1_withdrawal_address {poolAddress}</b></div>
             <p>and upload the deposit file here</p>
             <DropKeys onFileReceived={(data) => {
               const depositData = JSON.parse(data);

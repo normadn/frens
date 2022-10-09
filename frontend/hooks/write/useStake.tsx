@@ -1,13 +1,13 @@
 import { ethers } from 'ethers';
 import {
   useAccount,
-    usePrepareContractWrite,
-    useContractWrite,
-    useNetwork
-  } from "wagmi";
+  usePrepareContractWrite,
+  useContractWrite,
+  useNetwork
+} from "wagmi";
 import StakingPool from "../../utils/StakingPool.json";
 
-export function useStake({ address, depositdata } : { address: string , depositdata: any }) {
+export function useStake({ address, depositdata }: { address: string, depositdata: any }) {
   // const { chain } = useNetwork();
   // const contractAddr =
   //   chain?.name === "Goerli"
@@ -22,9 +22,15 @@ export function useStake({ address, depositdata } : { address: string , depositd
   // bytes calldata signature,
   // bytes32 deposit_data_root
 
-  const args = [ depositdata.pubkey,depositdata.withdrawal_credentials,depositdata.signature,depositdata.deposit_data_root];
+  const args = [
+    `0x${depositdata.pubkey}`,
+    `0x${depositdata.withdrawal_credentials}`,
+    `0x${depositdata.signature}`,
+    `0x${depositdata.deposit_data_root}`
+  ];
 
-  console.log("ARGS=",args);
+  console.log("ARGS=", args);
+  console.log("contract=",address);
 
   const { config } = usePrepareContractWrite({
     addressOrName: address,
