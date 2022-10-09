@@ -9,6 +9,7 @@ import { DropKeys } from 'components/dropKeys';
 import { DepositProgressBarComponent } from 'components/shared/depositProgressBarComponent';
 
 const Operator: NextPage = () => {
+  const [poolContract, setPoolContract] = useState("")
   const [tokenCode, setTokenCode] = useState("abcdef")
   const [step, setStep] = useState(1)
 
@@ -31,7 +32,7 @@ const Operator: NextPage = () => {
             1️⃣ Create Pool
           </h1>
           <div className={`${step == 1 ? "block" : "hidden"}`}>
-            <CreatePool setTokenCode={setTokenCode} setStep={setStep} />
+            <CreatePool setTokenCode={setTokenCode} setStep={setStep} setPoolContract={setPoolContract} />
           </div>
         </div>
 
@@ -40,18 +41,25 @@ const Operator: NextPage = () => {
             2️⃣ Invite frens
           </h1>
           <div className={`${step == 2 ? "block" : "hidden"}`}>
-            <InviteFrens tokenCode={tokenCode} />
+            <InviteFrens tokenCode={tokenCode} poolContract={poolContract} />
+          </div>
+        </div>
+
+        <div className="w-2/3 flex flex-col items-center border-2 border-blue-500 rounded-md mb-4 p-3 bg-white">
+          <h1 className="text-3xl font-bold">
+            3️⃣  Watch pool fill
+          </h1>
+          <div className={`${step == 3 ? "block" : "hidden"}`}>
             <DepositProgressBarComponent/>
           </div>
         </div>
 
         <div className="w-2/3 flex flex-col items-center border-2 border-blue-500 rounded-md mb-4 p-3 bg-white">
           <h1 className="text-3xl font-bold">
-            3️⃣ Start your SSV validator
+            4️⃣ Start your SSV validator
           </h1>
-          <div className={`${step == 2 ? "block" : "hidden"}`}>
+          <div className={`${step == 4 ? "block" : "hidden"}`}>
             <SelectOperator setTokenCode={setTokenCode} setStep={setStep} />
-
             <DropKeys />
           </div>
         </div>

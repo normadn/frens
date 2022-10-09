@@ -4,7 +4,7 @@ import StakingPoolFactory from "../utils/StakingPoolFactory.json";
 
 const INVITATION_TOKEN_LENGTH = 9
 
-export const CreatePool = ({setTokenCode, setStep}) => {
+export const CreatePool = ({setTokenCode, setStep, setPoolContract}) => {
 
     const { data, isLoading, write:createPool } = useCreatePool();
     let etherscanLink = ""
@@ -21,6 +21,8 @@ export const CreatePool = ({setTokenCode, setStep}) => {
         eventName: 'Create',
         listener: (event) => {
             console.log(event);
+            console.log(event[1])
+            setPoolContract(event[1])
             setStep(2);
         },
     })
@@ -36,6 +38,9 @@ export const CreatePool = ({setTokenCode, setStep}) => {
             <div className='flex items-center justify-center mt-4 mb-2'>
                 {data ?
                     <div>
+                        <div className="my-2">
+                            bear with us ... pool is getting created
+                        </div>
                         <a className="underline text-blue-500" href={etherscanLink} target="_blank" rel="noopener noreferrer">
                             tx on etherscan
                         </a>
