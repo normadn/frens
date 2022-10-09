@@ -18,6 +18,13 @@ const Operator: NextPage = () => {
   const [step, setStep] = useState(1)
   const [depositFileData, setDepositFileData] = useState()
 
+  useEffect(() => {
+    if (poolAddress) {
+      setPoolContract(poolAddress as string);
+      setStep(3)
+    }
+  }, [poolAddress])
+
   return (
     <div className="bg-gradient-to-r from-cyan-400 to-blue-300" data-theme="winter">
       <Head>
@@ -45,7 +52,7 @@ const Operator: NextPage = () => {
           <h1 className="text-3xl font-bold">
             2️⃣ Invite frens
           </h1>
-          <div className={`${step == 2 ? "block" : "hidden"}`}>
+          <div className={`${step >= 2 ? "block" : "hidden"}`}>
             <InviteFrens tokenCode={tokenCode} poolContract={poolContract} setStep={setStep} />
           </div>
         </div>
@@ -54,7 +61,7 @@ const Operator: NextPage = () => {
           <h1 className="text-3xl font-bold">
             3️⃣  Watch pool fill
           </h1>
-          <div className={`${step == 3 ? "block w-2/3" : "hidden"}`}>
+          <div className={`${step >= 3 ? "block w-2/3" : "hidden"}`}>
             <PoolInfo address={poolContract} />
           </div>
         </div>
@@ -63,17 +70,18 @@ const Operator: NextPage = () => {
           <h1 className="text-3xl font-bold">
             4️⃣ Start your SSV validator
           </h1>
-          {/* <div className={`${step == 4 ? "block" : "hidden"}`}> */}
-          <div>
-            <p>Now first create staking keys using this command</p>
-            <div><b>deposit new-mnemonic --eth1_withdrawal_address {poolAddress}</b></div>
-            <p>and upload the deposit file here</p>
-            <DropKeys onFileReceived={(data) => {
-              const depositData = JSON.parse(data);
-              setDepositFileData(depositData[0]);
-            }} />
-            <Stake address={poolAddress as string} depositdata={depositFileData} />
-            <SelectOperator setTokenCode={setTokenCode} setStep={setStep} />
+          <div className={`${step == 4 ? "block" : "hidden"}`}>
+            <div>
+              <p>Now first create staking keys using this command</p>
+              <div><b>deposit new-mnemonic --eth1_withdrawal_address {poolAddress}</b></div>
+              <p>and upload the deposit file here</p>
+              <DropKeys onFileReceived={(data) => {
+                const depositData = JSON.parse(data);
+                setDepositFileData(depositData[0]);
+              }} />
+              <Stake address={poolAddress as string} depositdata={depositFileData} />
+              <SelectOperator setTokenCode={setTokenCode} setStep={setStep} />
+            </div>
           </div>
         </div>
       </main>
