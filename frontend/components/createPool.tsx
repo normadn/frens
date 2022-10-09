@@ -39,7 +39,7 @@ export const CreatePool = ({setTokenCode, setStep}) => {
 
         setStep(2);
 
-        // createPool();
+        createPool();
     }
 
     let operatorList = ssvOperators?.map((item, i) => {
