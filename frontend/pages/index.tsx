@@ -5,7 +5,7 @@ import Navbar from 'components/navbar';
 
 const Home: NextPage = () => {
   return (
-    <div className={styles.container} data-theme="winter">
+    <div className="bg-gradient-to-r from-cyan-400 to-blue-300 text-white" data-theme="winter">
       <Head>
         <title>frens</title>
         <meta
@@ -18,8 +18,8 @@ const Home: NextPage = () => {
       <Navbar />
 
       <main>
-        <div className="hero min-h-screen -mt-12">
-          <div className="hero-content flex-col lg:flex-row">
+        <div className="hero min-h-screen ">
+          <div className="hero-content flex-col lg:flex-row -mt-12">
             <img src="https://placeimg.com/260/400/arch" className="basis-2/5 max-w-sm mr-0 md:mr-20 rounded-lg shadow-2xl" />
             <div className="basis-3/5">
               <h1 className="text-5xl font-bold">Stake with Frens!</h1>
@@ -31,8 +31,8 @@ const Home: NextPage = () => {
       </main>
 
       <footer className={styles.footer}>
-        <a href="https://rainbow.me" target="_blank" rel="noopener noreferrer">
-          Made with ❤️ by your frens at 🌈
+        <a href="/">
+          Made with ❤️ by your frens 🧑‍🤝‍🧑
         </a>
       </footer>
     </div>
