@@ -28,7 +28,7 @@ export const PoolInfo = ({address}) => {
                 <div>{totaldeposits?.toString()}</div> 
             </div>
             <div className='flex justify-between'>
-                <div>Pool</div>
+                <div>Pool Address</div>
                 <div>{address}</div> 
             </div>
         </div>

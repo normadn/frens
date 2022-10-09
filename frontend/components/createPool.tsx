@@ -26,7 +26,7 @@ export const CreatePool = ({setTokenCode, setStep, setPoolContract}) => {
             setStep(2);
         },
     })
-    console.log(data)
+    // console.log(data)
 
     if(data){
         etherscanLink = `https://goerli.etherscan.io/tx/${data.hash}`
