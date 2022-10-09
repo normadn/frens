@@ -18,12 +18,12 @@ const Operator: NextPage = () => {
   const [step, setStep] = useState(1)
   const [depositFileData, setDepositFileData] = useState()
 
-  useEffect(() => {
-    if (poolAddress) {
-      setPoolContract(poolAddress as string);
-      setStep(3)
-    }
-  }, [poolAddress])
+  // useEffect(() => {
+  //   if (poolAddress) {
+  //     setPoolContract(poolAddress as string);
+  //     setStep(3)
+  //   }
+  // }, [poolAddress])
 
   return (
     <div className="bg-gradient-to-r from-cyan-400 to-blue-300" data-theme="winter">
@@ -73,7 +73,7 @@ const Operator: NextPage = () => {
           <div className={`${step == 4 ? "block" : "hidden"}`}>
             <div>
               <p>Now first create staking keys using this command</p>
-              <div><b>deposit new-mnemonic --eth1_withdrawal_address {poolAddress}</b></div>
+              <div><code>deposit new-mnemonic --eth1_withdrawal_address {poolAddress}</code></div>
               <p>and upload the deposit file here</p>
               <DropKeys onFileReceived={(data) => {
                 const depositData = JSON.parse(data);
