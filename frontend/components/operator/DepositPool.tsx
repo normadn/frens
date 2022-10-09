@@ -1,4 +1,4 @@
-import { DropzoneComponent } from 'react-dropzone-component';
+// import { DropzoneComponent } from 'react-dropzone-component';
 // import { useStake } from '../hooks/write/useStake';
 
 export const DepositPool = () => {
@@ -27,7 +27,7 @@ export const DepositPool = () => {
 
     return (
         <>
-            <DropzoneComponent config={componentConfig} eventHandlers={eventHandlers} djsConfig={djsConfig}></DropzoneComponent>
+            {/* <DropzoneComponent config={componentConfig} eventHandlers={eventHandlers} djsConfig={djsConfig}></DropzoneComponent> */}
             {/* <button className="btn btn-primary" disabled={!allow} onClick={() => allow?.()}>
                 Allow spending SSV
             </button>            
