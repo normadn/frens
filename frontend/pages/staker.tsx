@@ -8,6 +8,8 @@ import { StakeFormComponent } from 'components/staker/stakeFormComponent';
 import { DepositProgressBarComponent } from 'components/shared/depositProgressBarComponent';
 import { OperatorWidget } from 'components/operatorWidget';
 import { PoolInfo } from 'components/poolInfo';
+import { NftGallery } from 'react-nft-gallery';
+import { useAccount } from "wagmi"
 
 const Investor: NextPage = () => {
   const token = useRouter().query["token"]
@@ -19,6 +21,8 @@ const Investor: NextPage = () => {
   }
 
   const { write: deposit } = useDeposit({ address: "0xe329f6685db5003706d024e087017dc8aea6dac5", val: "2" });
+
+  const { isConnected, address } = useAccount()
 
   return (
     <div className={styles.container} data-theme="winter">
@@ -34,20 +38,37 @@ const Investor: NextPage = () => {
 
       <OperatorWidget operatorAddress='0x9b18e9e9aa3dD35100b385b7035C0B1E44AfcA14' />
 
-      <PoolInfo />
 
       <main className={styles.main}>
-        <DepositProgressBarComponent />
-        <h1 className="text-3xl font-bold underline">
-          Stake now
-        </h1>
-        {/* {tokenText} */}
-        {/* {stakeForm} */}
-        <br />
-        <button className="btn btn-primary" disabled={!deposit} onClick={() => deposit?.()}>
-          Deposit
-        </button>
+        {(!isConnected || !address) && (
+          <p>Connect your wallet to stake in this pool</p>
+        )}
 
+        {isConnected && address && (
+          <>
+            <PoolInfo />
+            <DepositProgressBarComponent />
+
+            <h1 className="text-3xl font-bold underline">
+              Stake now
+            </h1>
+            {/* {tokenText} */}
+            {/* {stakeForm} */}
+            <br />
+            <button className="btn btn-primary" disabled={!deposit} onClick={() => deposit?.()}>
+              Deposit
+            </button>
+
+            <h1 className="text-3xl font-bold underline">NFT gallery</h1>
+            <NftGallery
+              ownerAddress={address}
+              apiUrl="https://testnets-api.opensea.io"
+              hasLightbox={false}
+              isInline={true}
+            />
+
+          </>
+        )}
 
       </main>
 
