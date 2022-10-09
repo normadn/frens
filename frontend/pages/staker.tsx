@@ -12,15 +12,15 @@ import { NftGallery } from 'react-nft-gallery';
 import { useAccount } from "wagmi"
 
 const Investor: NextPage = () => {
-  const token = useRouter().query["token"]
-  let tokenText = undefined
-  let stakeForm = undefined
-  if (token !== undefined) {
-    tokenText = <h1 className="text-3xl">You have joined the pool with code {token}</h1>
-    stakeForm = <StakeFormComponent></StakeFormComponent>
-  }
+  const poolAddress = useRouter().query["pool"];
+  // if (token !== undefined) {
+  //   tokenText = <h1 className="text-3xl">You have joined the pool with code {token}</h1>
+  //   stakeForm = <StakeFormComponent></StakeFormComponent>
+  // }
 
-  const { write: deposit } = useDeposit({ address: "0xe329f6685db5003706d024e087017dc8aea6dac5", val: "2" });
+  // const poolAddress = "0x7cDDfE5FdECFA8156eF8cBf2b9f7741334bd6df6"
+
+  const { write: deposit } = useDeposit({ address: poolAddress, val: "2" });
 
   const { isConnected, address } = useAccount()
 
@@ -39,6 +39,7 @@ const Investor: NextPage = () => {
       <OperatorWidget operatorAddress='0x9b18e9e9aa3dD35100b385b7035C0B1E44AfcA14' />
 
 
+
       <main className={styles.main}>
         {(!isConnected || !address) && (
           <>
@@ -49,7 +50,7 @@ const Investor: NextPage = () => {
 
         {isConnected && address && (
           <>
-            <PoolInfo />
+            <PoolInfo address={poolAddress} />
             <DepositProgressBarComponent />
 
             <h1 className="text-3xl font-bold underline">
