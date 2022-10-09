@@ -1,22 +1,28 @@
 import {
-    usePrepareContractWrite,
-    useContractWrite,
-    useNetwork
-  } from "wagmi";
+  usePrepareContractWrite,
+  useContractWrite,
+  useNetwork,
+  useAccount
+} from "wagmi";
 import StakingPoolFactory from "../../utils/StakingPoolFactory.json";
+
+const StakingPoolFactoryAddress = "0x7b24022a3c62A20B19Fa48b919433De1a87B3A78"
+const goerliDepostAddress = "0x00000000219ab540356cbb839cbe05303d7705fa"
+const { address: ownerAddress } = useAccount()
+
 
 export function useCreatePool() {
   const { chain } = useNetwork();
   const contractAddr =
     chain?.name === "Goerli"
-      ? "0x7b24022a3c62A20B19Fa48b919433De1a87B3A78"
-      : "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+      ? StakingPoolFactoryAddress
+      : "0x0000000000000000000000000000000000000000";
 
   const { config } = usePrepareContractWrite({
     addressOrName: contractAddr,
     contractInterface: StakingPoolFactory.abi,
     functionName: 'create',
-    args: ["0x00000000219ab540356cbb839cbe05303d7705fa", "0xb56001fBF57a5978D2Ba8697fFFF8A319Fa2F2b6"],
+    args: [goerliDepostAddress, ownerAddress],
   })
   const { data, isLoading, isSuccess, write } = useContractWrite(config)
 
