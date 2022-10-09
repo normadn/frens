@@ -25,7 +25,7 @@ const Investor: NextPage = () => {
   const { isConnected, address } = useAccount()
 
   return (
-    <div className={styles.container} data-theme="winter">
+    <div className="{styles.container}" data-theme="winter">
       <Head>
         <title>frens | investor</title>
         <meta
