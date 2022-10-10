@@ -21,7 +21,7 @@ const Home: NextPage = () => {
       <main>
         <div className="hero min-h-screen -mt-12">
           <div className="hero-content flex-col lg:flex-row">
-            <img src="/frens.png" className="basis-2/5 max-w-sm mr-0 md:mr-20 rounded-lg shadow-2xl"/>
+            <img src="/frens.png" className="hidden md:block basis-2/5 max-w-sm mr-0 md:mr-20 rounded-lg shadow-2xl"/>
             <div className="basis-3/5">
               <h1 className="text-5xl font-bold text-white">Stake with Frens!</h1>
               <p className="text-xl py-6 text-white">Spin up a staking pool so ur frens can stake via their favorite crypto degen</p>
