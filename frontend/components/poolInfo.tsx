@@ -19,13 +19,13 @@ export const PoolInfo = ({address}) => {
 
     return (
         <div className='my-4 px-6'>
-            <div className='flex justify-between'>
+            {/* <div className='flex justify-between'>
                 <div>Staking Rewards</div>
                 <div>8%</div> 
-            </div>
+            </div> */}
             <div className='flex justify-between'>
                 <div>Current Pool Balance</div>
-                <div>{totaldeposits?.toString() ?? "0"}</div> 
+                <div>{totaldeposits?.div("1000000000000000000").toString() ?? "0"} ETH</div> 
             </div>
             <div className='flex justify-between'>
                 <div>Pool Address</div>

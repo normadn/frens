@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useAllowance } from '../hooks/write/useAllowance';
 
@@ -7,6 +7,8 @@ export const DropKeys = ({ onFileReceived }: { onFileReceived: any }) => {
     //     keystore: "", keystorePassword: "testtest",
     //     operators: [], operatorIds: [], ssvAmount: 20
     // });
+    const [showDropzone,setShowDropzone]  = useState(true);
+
     const { data: data2, isLoading: isLoading2, isSuccess: isSuccess2, write: allow } = useAllowance({
         spender: "",
         value: ""
@@ -34,7 +36,7 @@ export const DropKeys = ({ onFileReceived }: { onFileReceived: any }) => {
                     }
 
                     const filecontent = evt.target.result;
-
+                    setShowDropzone(false);
                     onFileReceived(filecontent);
                 };
 
@@ -43,13 +45,17 @@ export const DropKeys = ({ onFileReceived }: { onFileReceived: any }) => {
         }, [])
         const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
+        if (!showDropzone){
+            return(<h2><b>Deposit file imported !</b></h2>);
+        }
+
         return (
             <div {...getRootProps()}>
                 <input {...getInputProps()} />
                 {
                     isDragActive ?
                         <p>Drop the files here ...</p> :
-                        <p>Drag 'n' drop some files here, or click to select files</p>
+                        <button className="btn btn-primary my-2 mr-2">Click to select Deposit file</button>
                 }
             </div>
         )
@@ -58,12 +64,12 @@ export const DropKeys = ({ onFileReceived }: { onFileReceived: any }) => {
     return (
         <>
             <MyDropzone></MyDropzone>
-            <button className="btn btn-primary my-2 mr-2" disabled={!allow} onClick={() => allow?.()}>
+            {/* <button className="btn btn-primary my-2 mr-2" disabled={!allow} onClick={() => allow?.()}>
                 Allow spending SSV
             </button>
             <button className="btn btn-primary" disabled={true}>
                 Register SSV validator
-            </button>
+            </button> */}
         </>
     );
 };

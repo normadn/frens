@@ -7,6 +7,7 @@ import { InviteFrens } from 'components/inviteFrens';
 import { CreatePool } from 'components/createPool';
 import { SelectOperator } from 'components/selectOperator';
 import { DropKeys } from 'components/dropKeys';
+import { GiveAllowance } from 'components/GiveAllowance';
 import { PoolInfo } from 'components/poolInfo';
 import { DepositProgressBarComponent } from 'components/shared/depositProgressBarComponent';
 import { Stake } from 'components/stake';
@@ -82,10 +83,11 @@ const Operator: NextPage = () => {
                   const depositData = JSON.parse(data);
                   setDepositFileData(depositData[0]);
                 }} />
+                <Stake address={poolAddress as string} depositdata={depositFileData} />
               </div>
               <div className="my-2 p-2 border border-slate-700 rounded-md">
-                <Stake address={poolAddress as string} depositdata={depositFileData} />
                 <SelectOperator setTokenCode={setTokenCode} setStep={setStep} />
+                <GiveAllowance/>
               </div>
             </div>
           </div>
