@@ -3,6 +3,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Navbar from 'components/navbar';
+import Footer from 'components/footer';
 import { InviteFrens } from 'components/inviteFrens';
 import { CreatePool } from 'components/createPool';
 import { SelectOperator } from 'components/selectOperator';
@@ -93,6 +94,7 @@ const Operator: NextPage = () => {
           </div>
         </div>
       </main>
+      <Footer/>
     </div >
   );
 };

@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { NftGallery } from 'react-nft-gallery';
 import Navbar from 'components/navbar';
+import Footer from 'components/footer';
 import { useDeposit } from '../hooks/write/useDeposit';
 import { StakeFormComponent } from 'components/staker/stakeFormComponent';
 import { DepositProgressBarComponent } from 'components/shared/depositProgressBarComponent';
@@ -21,7 +22,6 @@ const Staker: NextPage = () => {
   const [stakeAmount, setStakeAmount] = useState<string>("0");
   const [isDepositing, setIsDepositing] = useState(false);
   const { data, write: deposit } = useDeposit({ address: poolAddress as string, val: stakeAmount });
-  console.log(data)
 
   // if(poolAddress) {
   //   useContractEvent({
@@ -51,7 +51,7 @@ const Staker: NextPage = () => {
       
       <Navbar />
 
-      <main className="flex flex-col justify-center items-center">
+      <main className="flex flex-col justify-center items-center min-h-[93vh]">
         <OperatorWidget operatorAddress='0x9b18e9e9aa3dD35100b385b7035C0B1E44AfcA14' />
 
         <div className='w-3/5 border-2 border-violet-500 rounded-md bg-white mt-6'>
@@ -123,7 +123,7 @@ const Staker: NextPage = () => {
         </div>
 
       </main>
-
+      <Footer/>
     </div >
   );
 };
