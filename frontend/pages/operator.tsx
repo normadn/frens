@@ -87,7 +87,7 @@ const Operator: NextPage = () => {
               </div>
               <div className="my-2 p-2 border border-slate-700 rounded-md">
                 <SelectOperator setTokenCode={setTokenCode} setStep={setStep} />
-                <GiveAllowance/>
+                <GiveAllowance onFileReceived={undefined}/>
               </div>
             </div>
           </div>
