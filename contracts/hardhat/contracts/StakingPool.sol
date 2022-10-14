@@ -23,7 +23,7 @@ interface IDepositContract {
 
 contract StakingPool is ERC721Enumerable, Ownable {
 
-    using Strings for uint256;
+  using Strings for uint256;
 
   event Deposit(address depositContractAddress, address caller);
 
@@ -38,12 +38,7 @@ contract StakingPool is ERC721Enumerable, Ownable {
   IDepositContract depositContract;
 
   address private rightfulOwner;
-/*
-  modifier onlyOwner() {
-   require(address(msg.sender) == owner, "Not owner");
-   _;
-  }
-*/
+
   constructor(address depositContractAddress_, address owner_) ERC721("staking con amigos", "FRENS") {
     currentState = State.acceptingDeposits;
     depositContractAddress = depositContractAddress_;
@@ -123,17 +118,28 @@ contract StakingPool is ERC721Enumerable, Ownable {
     require(address(this).balance >= 32, "not enough eth");
     currentState = State.staked;
     uint value = 32 ether;
+    //get expected withdrawal_credentials based on contract address
+    bytes memory withdrawalCredFromAddr = _toWithdrawalCred(address(this));
+    //compare expected withdrawal_credentials to provided
+    require(keccak256(withdrawal_credentials) == keccak256(withdrawalCredFromAddr), "withdrawal credential mismatch");
     depositContract.deposit{value: value}(pubkey, withdrawal_credentials, signature, deposit_data_root);
-
     emit Deposit(depositContractAddress, msg.sender);
   }
 
-  function rugpull() public {
+  function _toWithdrawalCred(address a) private pure returns (bytes memory) {
+    uint uintFromAddress = uint256(uint160(a));
+    bytes memory withdralDesired = abi.encodePacked(uintFromAddress + 0x0100000000000000000000000000000000000000000000000000000000000000);
+    return withdralDesired;
+  }
+
+//rugpull is for testing only and should not be in the mainnet version
+  function rugpull() public onlyOwner{
     payable(msg.sender).transfer(address(this).balance);
   }
 
   function unstake() public {
     currentState = State.exited;
+    //TODO
   }
 
 
