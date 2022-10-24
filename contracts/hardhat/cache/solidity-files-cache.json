@@ -87,51 +87,9 @@
         "console"
       ]
     },
-    "/home/wildhare/hardhat/speedRunEthereum/frens/packages/hardhat/node_modules/hardhat/console.sol": {
-      "lastModificationDate": 1665188638209,
-      "contentHash": "cc4777addd464ea56fa35b1c45df0591",
-      "sourceName": "hardhat/console.sol",
-      "solcConfig": {
-        "version": "0.8.4",
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "devdoc",
-                "userdoc",
-                "storageLayout",
-                "evm.gasEstimates"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          },
-          "metadata": {
-            "useLiteralContent": true
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        ">=0.4.22 <0.9.0"
-      ],
-      "artifacts": [
-        "console"
-      ]
-    },
     "/home/wildhare/hardhat/speedRunEthereum/frens/packages/hardhat/contracts/StakingPool.sol": {
-      "lastModificationDate": 1665287579487,
-      "contentHash": "5ba9d74b50f73c09d002d8731a808d38",
+      "lastModificationDate": 1665776256619,
+      "contentHash": "bd8f5293c41b5a912d15400b65bb871d",
       "sourceName": "contracts/StakingPool.sol",
       "solcConfig": {
         "version": "0.8.16",
@@ -179,8 +137,8 @@
       ]
     },
     "/home/wildhare/hardhat/speedRunEthereum/frens/packages/hardhat/contracts/StakingPoolFactory.sol": {
-      "lastModificationDate": 1665272162124,
-      "contentHash": "c7aa8d518b127d1eff05c2510afafda6",
+      "lastModificationDate": 1665292382540,
+      "contentHash": "f9d768fcdaca21cc4273cb1ef86e2907",
       "sourceName": "contracts/StakingPoolFactory.sol",
       "solcConfig": {
         "version": "0.8.16",
@@ -801,6 +759,49 @@
       ],
       "artifacts": [
         "Base64"
+      ]
+    },
+    "/home/wildhare/hardhat/speedRunEthereum/frens/packages/hardhat/node_modules/hardhat/console.sol": {
+      "lastModificationDate": 1665203851000,
+      "contentHash": "cc4777addd464ea56fa35b1c45df0591",
+      "sourceName": "hardhat/console.sol",
+      "solcConfig": {
+        "version": "0.8.16",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.4.22 <0.9.0"
+      ],
+      "artifacts": [
+        "console"
       ]
     }
   }
